@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kisan Mitra — Dashboard</title>
+  <meta name="description" content="Real-time IoT sensor dashboard with AI-powered crop recommendations." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="dashboard-body">
+
+  <!-- Sidebar -->
+  <aside class="sidebar ">
+    <div class="sidebar-brand">
+      <span class="brand-icon-sm"></span>
+      <span class="sidebar-title">Kisan Mitra</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#sensor-section"      class="nav-link active" data-section="sensor">
+        <span class="nav-icon"></span> Live Sensors
+      </a>
+      <a href="#recommend-section"   class="nav-link" data-section="recommend">
+        <span class="nav-icon"></span> Recommend
+      </a>
+      <a href="#history-section"     class="nav-link" data-section="history">
+        <span class="nav-icon"></span> History
+      </a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="user-info-sidebar" id="user-info-sidebar">
+        <div class="user-avatar" id="user-avatar">A</div>
+        <div>
+          <div class="user-name-sm" id="user-name-sm">Loading...</div>
+          <div class="user-region-sm" id="user-region-sm">—</div>
+        </div>
+      </div>
+      <button class="btn-logout" id="logout-btn" onclick="handleLogout()">
+         Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="main-content">
+
+    <!-- Top Header -->
+    <header class="top-header">
+      <div class="header-left">
+        <h2 class="page-title">Farm Dashboard</h2>
+        <p class="page-subtitle">Real-time sensor monitoring & AI recommendations</p>
+      </div>
+      <div class="header-right">
+        <div class="mqtt-status" id="mqtt-status">
+          <span class="status-dot" id="status-dot"></span>
+          <span id="status-text">Connecting...</span>
+        </div>
+        <div class="last-updated" id="last-updated">—</div>
+      </div>
+    </header>
+
+    <!-- ═══ SECTION 1 — Live Sensors ═══════════════════════════════════════ -->
+    <section id="sensor-section" class="dashboard-section">
+      <div class="section-header" style="flex-wrap: wrap;">
+        <h3 class="section-title"> Live Sensor Readings</h3>
+        
+        <!-- Region & Area Selection Dropdown -->
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <div class="input-wrap" style="min-width: 240px;">
+            <input type="text" id="live-region" placeholder="Region (Punjab, AP...)" onkeyup="startSensors()" style="width: 100%; border: 1px solid var(--border-line); background: var(--bg-input); padding: 0.5rem 1rem; border-radius: var(--radius-input); color: var(--text-primary);" />
+          </div>
+          <div class="input-wrap" style="min-width: 200px;">
+            <input type="number" step="0.1" id="live-area" placeholder="Area (Hectares)" onchange="startSensors()" onkeyup="startSensors()" style="width: 100%; border: 1px solid var(--border-line); background: var(--bg-input); padding: 0.5rem 1rem; border-radius: var(--radius-input); color: var(--text-primary);" />
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; align-items: center; margin-left: auto;">
+          <button class="btn-primary" style="padding: 0.35rem 0.75rem; font-size: 0.85rem; border-radius: 6px; cursor: pointer; display: none;" onclick="refreshSensors()" id="refresh-btn"> Simulate New Test</button>
+          <span class="section-badge" id="sensor-source-badge">Awaiting Region...</span>
+        </div>
+      </div>
+
+      <div class="sensor-grid">
+        <!-- N -->
+        <div class="sensor-card " id="card-N">
+          <div class="sensor-icon-wrap" style="--accent:#4ade80"></div>
+          <div class="sensor-info">
+            <span class="sensor-label">Nitrogen (N)</span>
+            <span class="sensor-value" id="val-N">—</span>
+            <span class="sensor-unit">kg/ha</span>
+          </div>
+          <div class="sensor-bar-wrap">
+            <div class="sensor-bar" id="bar-N" style="--accent:#4ade80"></div>
+          </div>
+        </div>
+
+        <!-- P -->
+        <div class="sensor-card " id="card-P">
+          <div class="sensor-icon-wrap" style="--accent:#f97316"></div>
+          <div class="sensor-info">
+            <span class="sensor-label">Phosphorus (P)</span>
+            <span class="sensor-value" id="val-P">—</span>
+            <span class="sensor-unit">kg/ha</span>
+          </div>
+          <div class="sensor-bar-wrap">
+            <div class="sensor-bar" id="bar-P" style="--accent:#f97316"></div>
+          </div>
+        </div>
+
+        <!-- K -->
+        <div class="sensor-card " id="card-K">
+          <div class="sensor-icon-wrap" style="--accent:#a78bfa"></div>
+          <div class="sensor-info">
+            <span class="sensor-label">Potassium (K)</span>
+            <span class="sensor-value" id="val-K">—</span>
+            <span class="sensor-unit">kg/ha</span>
+          </div>
+          <div class="sensor-bar-wrap">
+            <div class="sensor-bar" id="bar-K" style="--accent:#a78bfa"></div>
+          </div>
+        </div>
+
+        <!-- Temperature -->
+        <div class="sensor-card " id="card-temp">
+          <div class="sensor-icon-wrap" style="--accent:#fb923c"></div>
+          <div class="sensor-info">
+            <span class="sensor-label">Temperature</span>
+            <span class="sensor-value" id="val-temp">—</span>
+            <span class="sensor-unit">°C</span>
+          </div>
+          <div class="sensor-bar-wrap">
+            <div class="sensor-bar" id="bar-temp" style="--accent:#fb923c"></div>
+          </div>
+        </div>
+
+        <!-- Humidity -->
+        <div class="sensor-card " id="card-hum">
+          <div class="sensor-icon-wrap" style="--accent:#38bdf8"></div>
+          <div class="sensor-info">
+            <span class="sensor-label">Humidity</span>
+            <span class="sensor-value" id="val-hum">—</span>
+            <span class="sensor-unit">%</span>
+          </div>
+          <div class="sensor-bar-wrap">
+            <div class="sensor-bar" id="bar-hum" style="--accent:#38bdf8"></div>
+          </div>
+        </div>
+
+        <!-- pH -->
+        <div class="sensor-card " id="card-ph">
+          <div class="sensor-icon-wrap" style="--accent:#facc15"></div>
+          <div class="sensor-info">
+            <span class="sensor-label">Soil pH</span>
+            <span class="sensor-value" id="val-ph">—</span>
+            <span class="sensor-unit">pH</span>
+          </div>
+          <div class="sensor-bar-wrap">
+            <div class="sensor-bar" id="bar-ph" style="--accent:#facc15"></div>
+          </div>
+        </div>
+
+        <!-- Rainfall -->
+        <div class="sensor-card " id="card-rain">
+          <div class="sensor-icon-wrap" style="--accent:#22d3ee"></div>
+          <div class="sensor-info">
+            <span class="sensor-label">Rainfall</span>
+            <span class="sensor-value" id="val-rain">—</span>
+            <span class="sensor-unit">mm</span>
+          </div>
+          <div class="sensor-bar-wrap">
+            <div class="sensor-bar" id="bar-rain" style="--accent:#22d3ee"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ SECTION 2 — Recommendation ════════════════════════════════════ -->
+    <section id="recommend-section" class="dashboard-section">
+      <div class="section-header">
+        <h3 class="section-title"> AI Crop Recommendation</h3>
+      </div>
+
+      <div class="recommend-panel ">
+        <div class="recommend-intro">
+          <p>Our system reads live sensor data, runs it through a <strong>Random Forest ML model</strong>, then asks <strong>Gemini AI</strong> to select the best crop considering your region, current season, and crop rotation history.</p>
+        </div>
+        <button class="btn-recommend" id="recommend-btn" onclick="getRecommendation()">
+          <span class="btn-icon"></span>
+          <span class="btn-text">Get AI Recommendation</span>
+          <span class="btn-spinner-lg hidden" id="rec-spinner"></span>
+        </button>
+        <div id="rec-error" class="error-msg hidden"></div>
+      </div>
+
+      <!-- Result card — hidden until recommendation received -->
+      <div id="result-container" class="hidden">
+        <h4 style="margin-bottom: 16px; font-weight: 500;">Select the best crop to save to your history:</h4>
+        <div id="result-list" style="display: flex; flex-direction: column; gap: 16px;"></div>
+        <div class="result-sensor-snapshot" id="result-sensor-snapshot" style="margin-top:24px;"></div>
+        <button class="btn-primary" id="save-history-btn" onclick="saveRecommendation()" style="margin-top: 16px;">Confirm & Save Selection</button>
+      </div>
+    </section>
+
+    <!-- ═══ SECTION 3 — Crop History ══════════════════════════════════════ -->
+    <section id="history-section" class="dashboard-section">
+      <div class="section-header">
+        <h3 class="section-title"> Crop History</h3>
+        <span class="section-badge" id="history-count">0 records</span>
+      </div>
+
+      <div class="history-panel ">
+        <div id="history-empty" class="history-empty hidden">
+          <span class="empty-icon"></span>
+          <p>No crop history yet. Get your first recommendation above!</p>
+        </div>
+        <div class="history-table-wrap">
+          <table class="history-table" id="history-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Crop</th>
+                <th>Harvest Duration</th>
+                <th>Planting Month</th>
+                <th>Harvest Month</th>
+                <th>Est. Planting Cost/Ha</th>
+                <th>Total Cost</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="history-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main><!-- /main-content -->
+
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>

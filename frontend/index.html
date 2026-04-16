@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kisan Mitra — Smart Crop Recommendation</title>
+  <meta name="description" content="AIoT-based intelligent crop recommendation system for smart farmers using real-time sensor data and Gemini AI." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-body">
+
+  <div class="auth-container">
+
+    <!-- Logo / Brand -->
+    <div class="brand">
+      <h1 class="brand-name">Kisan Mitra</h1>
+      <p class="brand-tagline">AIoT-Powered Crop Recommendation</p>
+    </div>
+
+    <!-- Auth Card -->
+    <div class="auth-card">
+
+      <!-- Tab Toggle -->
+      <div class="auth-tabs">
+        <button id="tab-login"    class="tab-btn active" onclick="switchTab('login')">Login</button>
+        <button id="tab-register" class="tab-btn"        onclick="switchTab('register')">Register</button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login-form" class="auth-form" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label for="login-email">Email Address</label>
+          <div class="input-wrap">
+            <input type="email" id="login-email" placeholder="farmer@example.com" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <div class="input-wrap">
+            <input type="password" id="login-password" placeholder="Enter your password" required />
+          </div>
+        </div>
+        <div id="login-error" class="error-msg hidden"></div>
+        <button type="submit" class="btn-primary" id="login-btn">
+          <span class="btn-text">Login to Dashboard</span>
+          <span class="btn-spinner hidden"></span>
+        </button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="register-form" class="auth-form hidden" onsubmit="handleRegister(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="reg-name">Full Name</label>
+            <div class="input-wrap">
+              <input type="text" id="reg-name" placeholder="John Farmer" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="reg-email">Email Address</label>
+            <div class="input-wrap">
+              <input type="email" id="reg-email" placeholder="john@example.com" required />
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="reg-password">Password</label>
+          <div class="input-wrap">
+            <input type="password" id="reg-password" placeholder="Min. 6 characters" required />
+          </div>
+        </div>
+        <div id="reg-error" class="error-msg hidden"></div>
+        <button type="submit" class="btn-primary" id="reg-btn">
+          <span class="btn-text">Create Account</span>
+          <span class="btn-spinner hidden"></span>
+        </button>
+      </form>
+
+    </div><!-- /auth-card -->
+
+    <p class="auth-footer">Powered by IoT Sensors · Random Forest ML · Gemini AI</p>
+
+  </div><!-- /auth-container -->
+
+  <script src="/js/auth.js"></script>
+</body>
+</html>

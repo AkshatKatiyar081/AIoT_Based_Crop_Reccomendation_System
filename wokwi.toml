@@ -1,0 +1,8 @@
+[wokwi]
+version = 1
+elf = "wokwi/.pio/build/esp32dev/firmware.elf"
+firmware = "wokwi/.pio/build/esp32dev/firmware.bin"
+
+[serial]
+enabled = true
+baud = 115200

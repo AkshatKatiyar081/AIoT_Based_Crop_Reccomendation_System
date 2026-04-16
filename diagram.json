@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "author": "Kisan Mitra",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-dht22", "id": "dht1", "top": -80, "left": 200, "attrs": {} },
+    { "type": "wokwi-potentiometer", "id": "pot1", "top": 80,  "left": 280, "attrs": { "label": "Nitrogen (N)" } },
+    { "type": "wokwi-potentiometer", "id": "pot2", "top": 160, "left": 280, "attrs": { "label": "Phosphorus (P)" } },
+    { "type": "wokwi-potentiometer", "id": "pot3", "top": 240, "left": 280, "attrs": { "label": "Potassium (K)" } },
+    { "type": "wokwi-potentiometer", "id": "pot4", "top": 320, "left": 280, "attrs": { "label": "pH" } },
+    { "type": "wokwi-potentiometer", "id": "pot5", "top": 400, "left": 280, "attrs": { "label": "Rainfall" } }
+  ],
+  "connections": [
+    ["dht1:VCC", "esp:3V3", "red", []],
+    ["dht1:GND", "esp:GND.1", "black", []],
+    ["dht1:SDA", "esp:D4", "green", []],
+    ["pot1:VCC", "esp:3V3", "red", []],
+    ["pot1:GND", "esp:GND.2", "black", []],
+    ["pot1:SIG", "esp:D34", "orange", []],
+    ["pot2:VCC", "esp:3V3", "red", []],
+    ["pot2:GND", "esp:GND.3", "black", []],
+    ["pot2:SIG", "esp:D35", "orange", []],
+    ["pot3:VCC", "esp:3V3", "red", []],
+    ["pot3:GND", "esp:GND.4", "black", []],
+    ["pot3:SIG", "esp:D32", "orange", []],
+    ["pot4:VCC", "esp:3V3", "red", []],
+    ["pot4:GND", "esp:GND.5", "black", []],
+    ["pot4:SIG", "esp:D33", "orange", []],
+    ["pot5:VCC", "esp:3V3", "red", []],
+    ["pot5:GND", "esp:GND.6", "black", []],
+    ["pot5:SIG", "esp:D25", "orange", []]
+  ]
+}
