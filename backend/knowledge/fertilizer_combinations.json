@@ -1,0 +1,110 @@
+{
+  "_meta": {
+    "source": "data_dictionary.csv of 'Soil Macro Nutrient Dataset for Fertilizer Combinations Advice, Pune' (Vispute et al., Mendeley Data, CC BY 4.0)",
+    "note": "status 'documented' = name from the dataset's data dictionary. status 'inferred' = the code is not in the dictionary; its meaning was worked out from the data on 20 Oct 2026 (see 'evidence'). Key finding: the last letter of Combination 1 always matches the last letter of Combination 2 on the same card (P with P, M with M, none with none), so each letter keeps one meaning: U = Urea, S = Super phosphate (SSP), D = DAP, P = Potash (MOP), M = Mixture, N = Nitrogen/NPK source, A = Ammonium sulphate (inferred).",
+    "dose_option": "Which calculated product set best matches the combination: 'dap' = DAP + Urea + MOP, 'ssp' = SSP + Urea + MOP, null = no direct match."
+  },
+  "codes": {
+    "USP": {
+      "name": "Urea + Super Phosphate",
+      "dose_option": "ssp",
+      "status": "documented",
+      "note": "Dictionary name is 'Urea Super Phosphate'. The trailing P very likely means Potash: USP always pairs with potash codes (NUP, DUP, AUP), while US (no P) pairs only with no-potash codes."
+    },
+    "USM": {
+      "name": "Urea + Super Phosphate + Mixture",
+      "dose_option": "ssp",
+      "status": "documented",
+      "note": "The dataset defines M only as 'Mixture'; M is not potash (it appears on high-K soils) and not linked to micronutrient deficiency."
+    },
+    "UP": {
+      "name": "Urea + Potash",
+      "dose_option": null,
+      "status": "documented"
+    },
+    "NUP": {
+      "name": "Nitrogen + Urea + Potash",
+      "dose_option": null,
+      "status": "documented"
+    },
+    "DUP": {
+      "name": "DAP + Urea + Potash",
+      "dose_option": "dap",
+      "status": "documented"
+    },
+    "NSP": {
+      "name": "Nitrogen + Single Super Phosphate",
+      "dose_option": "ssp",
+      "status": "documented"
+    },
+    "NU": {
+      "name": "Nitrogen + Urea",
+      "dose_option": null,
+      "status": "documented"
+    },
+    "NS": {
+      "name": "Nitrogen + Sulphur",
+      "dose_option": null,
+      "status": "documented"
+    },
+    "NP": {
+      "name": "Nitrogen + Phosphate",
+      "dose_option": null,
+      "status": "documented"
+    },
+    "NOT NEEDED": {
+      "name": "No chemical fertilizer needed",
+      "dose_option": null,
+      "status": "documented"
+    },
+    "US": {
+      "name": "Urea + Super Phosphate (no potash)",
+      "dose_option": "ssp",
+      "status": "inferred",
+      "confidence": "high",
+      "evidence": "Always paired with no-potash Combination 2 codes (NU, NS, DU, N); used for groundnut and ragi, whose official doses contain no potash (25:50:0, 80:40:0). It is USP without the P (potash)."
+    },
+    "AUP": {
+      "name": "Ammonium sulphate + Urea + Potash",
+      "dose_option": null,
+      "status": "inferred",
+      "confidence": "medium",
+      "evidence": "A is not in the dictionary. Every AUP soil is low in sulphur and 76% are very low in nitrogen; ammonium sulphate supplies both N and S. Used for maize and sugarcane."
+    },
+    "DU": {
+      "name": "DAP + Urea (no potash)",
+      "dose_option": "dap",
+      "status": "inferred",
+      "confidence": "high",
+      "evidence": "DUP without the P (potash). Appears only for groundnut (no potash in its dose) and only on high-potassium soils."
+    },
+    "DUM": {
+      "name": "DAP + Urea + Mixture",
+      "dose_option": "dap",
+      "status": "inferred",
+      "confidence": "medium",
+      "evidence": "DUP pattern with M instead of P; pairs with USM. M follows the dictionary's 'Mixture' (from USM). Exact mixture grade unknown."
+    },
+    "N": {
+      "name": "Nitrogen source only",
+      "dose_option": null,
+      "status": "inferred",
+      "confidence": "medium",
+      "evidence": "Only 2 soil-crop pairs (jowar), all on high-nitrogen soils with low phosphorus. Pairs with US (no potash)."
+    },
+    "NM": {
+      "name": "Nitrogen + Mixture",
+      "dose_option": null,
+      "status": "inferred",
+      "confidence": "medium",
+      "evidence": "Pairs with USM; only 3 soil-crop pairs (gram, sugarcane). Exact mixture grade unknown."
+    },
+    "NUM": {
+      "name": "Nitrogen + Urea + Mixture",
+      "dose_option": null,
+      "status": "inferred",
+      "confidence": "medium",
+      "evidence": "NUP pattern with M instead of P; always pairs with USM. Exact mixture grade unknown."
+    }
+  }
+}

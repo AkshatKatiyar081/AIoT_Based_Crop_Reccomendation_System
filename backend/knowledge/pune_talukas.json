@@ -1,0 +1,20 @@
+{
+  "_meta": {
+    "note": "Approximate coordinates of each taluka headquarters, used for the weather lookup. in_training_data marks talukas whose villages are in the Pune soil dataset."
+  },
+  "talukas": {
+    "Haveli":    {"lat": 18.52, "lon": 73.86, "in_training_data": true},
+    "Mawal":     {"lat": 18.73, "lon": 73.64, "in_training_data": true},
+    "Bhor":      {"lat": 18.15, "lon": 73.84, "in_training_data": true},
+    "Indapur":   {"lat": 18.12, "lon": 75.02, "in_training_data": true},
+    "Khed":      {"lat": 18.85, "lon": 73.88, "in_training_data": true},
+    "Ambegaon":  {"lat": 19.02, "lon": 73.77, "in_training_data": false},
+    "Baramati":  {"lat": 18.15, "lon": 74.58, "in_training_data": false},
+    "Daund":     {"lat": 18.46, "lon": 74.58, "in_training_data": false},
+    "Junnar":    {"lat": 19.20, "lon": 73.88, "in_training_data": false},
+    "Mulshi":    {"lat": 18.52, "lon": 73.52, "in_training_data": false},
+    "Purandar":  {"lat": 18.34, "lon": 74.03, "in_training_data": false},
+    "Shirur":    {"lat": 18.83, "lon": 74.37, "in_training_data": false},
+    "Velhe":     {"lat": 18.29, "lon": 73.64, "in_training_data": false}
+  }
+}

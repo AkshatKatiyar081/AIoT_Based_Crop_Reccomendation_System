@@ -1,0 +1,730 @@
+{
+  "_meta": {
+    "region": "Pune district, Maharashtra",
+    "verified": "partial",
+    "note": "Fertilizer doses and sowing months were checked against Maharashtra agricultural university (MPKV, PDKV, BSKKV) and ICAR publications on 20 Oct 2026; see each crop's 'verification' block. Costs per hectare are estimates except wheat and sugarcane, which were cross-checked against Directorate of Economics & Statistics data. Durations and water needs are general agronomic values.",
+    "fields": {
+      "sowing_months": "Months (1-12) in which the crop is normally sown in Pune district",
+      "duration_days": "Sowing to harvest, [min, max]",
+      "water_need": "low | medium | high, used for irrigation thresholds",
+      "water_mm": "Seasonal crop water requirement in mm, [min, max]",
+      "rdf": "Recommended dose of fertilizer, kg/ha of N, P2O5, K2O, for medium-fertility soil",
+      "cost_per_ha_inr": "Approximate cost of cultivation per hectare in rupees, [min, max]",
+      "verification": "Per-crop status of rdf / sowing / cost: verified = matches an official Maharashtra source; partial = trial or neighbouring-region source; general = standard value, not checked against a Pune source; cross-checked = consistent with government cost data; estimate / unverified = no source found."
+    }
+  },
+  "water_classes": {
+    "low": {
+      "moisture_on": 25,
+      "moisture_off": 40
+    },
+    "medium": {
+      "moisture_on": 35,
+      "moisture_off": 50
+    },
+    "high": {
+      "moisture_on": 50,
+      "moisture_off": 70
+    }
+  },
+  "crops": {
+    "Rice": {
+      "marathi": "भात",
+      "type": "cereal",
+      "seasons": [
+        "kharif"
+      ],
+      "sowing_months": [
+        6,
+        7
+      ],
+      "duration_days": [
+        120,
+        150
+      ],
+      "water_need": "high",
+      "water_mm": [
+        1100,
+        1500
+      ],
+      "rdf": {
+        "N": 100,
+        "P2O5": 50,
+        "K2O": 50
+      },
+      "cost_per_ha_inr": [
+        50000,
+        65000
+      ],
+      "verification": {
+        "rdf": "verified",
+        "sowing": "verified",
+        "cost": "estimate",
+        "sources": [
+          "MPKV Rahuri, Paddy research recommendations (mpkv.ac.in/Uploads/Research/1. Paddy_20200110043402.pdf)"
+        ]
+      }
+    },
+    "Grams": {
+      "marathi": "हरभरा",
+      "type": "pulse",
+      "seasons": [
+        "rabi"
+      ],
+      "sowing_months": [
+        10,
+        11
+      ],
+      "duration_days": [
+        100,
+        120
+      ],
+      "water_need": "low",
+      "water_mm": [
+        250,
+        350
+      ],
+      "rdf": {
+        "N": 25,
+        "P2O5": 50,
+        "K2O": 25
+      },
+      "cost_per_ha_inr": [
+        30000,
+        40000
+      ],
+      "verification": {
+        "rdf": "verified",
+        "sowing": "general",
+        "cost": "estimate",
+        "sources": [
+          "ICAR Rabi season agro-advisory for Maharashtra (vikaspedia.in)"
+        ],
+        "note": "ICAR Maharashtra advisory gives 25:50:25 basal; earlier value 25:50:0 corrected."
+      }
+    },
+    "Sugarcane": {
+      "marathi": "ऊस",
+      "type": "cash",
+      "seasons": [
+        "kharif",
+        "rabi",
+        "summer"
+      ],
+      "sowing_months": [
+        1,
+        2,
+        7,
+        8,
+        10,
+        11
+      ],
+      "duration_days": [
+        360,
+        540
+      ],
+      "water_need": "high",
+      "water_mm": [
+        1800,
+        2500
+      ],
+      "rdf": {
+        "N": 250,
+        "P2O5": 115,
+        "K2O": 115
+      },
+      "cost_per_ha_inr": [
+        180000,
+        220000
+      ],
+      "verification": {
+        "rdf": "verified",
+        "sowing": "general",
+        "cost": "cross-checked",
+        "sources": [
+          "MPKV Rahuri, Research Recommendations released during 2024 (mpkv.ac.in/Uploads/Research/2024-English_20241017111319.pdf)",
+          "DES cost of cultivation, Sugarcane, Maharashtra: operating about Rs 1.32 lakh/ha (2019) + fixed Rs 68,425/ha (2021) (ceicdata.com)"
+        ],
+        "note": "250:115:115 is MPKV's dose for suru/ratoon and most varieties; preseasonal cane is 340:170:170 and Co-86032 is 300:140:140."
+      }
+    },
+    "Maize": {
+      "marathi": "मका",
+      "type": "cereal",
+      "seasons": [
+        "kharif",
+        "rabi"
+      ],
+      "sowing_months": [
+        6,
+        7,
+        10,
+        11
+      ],
+      "duration_days": [
+        90,
+        120
+      ],
+      "water_need": "medium",
+      "water_mm": [
+        500,
+        800
+      ],
+      "rdf": {
+        "N": 120,
+        "P2O5": 60,
+        "K2O": 40
+      },
+      "cost_per_ha_inr": [
+        40000,
+        55000
+      ],
+      "verification": {
+        "rdf": "verified",
+        "sowing": "general",
+        "cost": "estimate",
+        "sources": [
+          "MPKV Rahuri, Maize research recommendations (mpkv.ac.in/Uploads/Research/5. Maize_20200110053602.pdf)"
+        ]
+      }
+    },
+    "Onion": {
+      "marathi": "कांदा",
+      "type": "vegetable",
+      "seasons": [
+        "kharif",
+        "rabi"
+      ],
+      "sowing_months": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "duration_days": [
+        110,
+        150
+      ],
+      "water_need": "medium",
+      "water_mm": [
+        350,
+        550
+      ],
+      "rdf": {
+        "N": 110,
+        "P2O5": 40,
+        "K2O": 60
+      },
+      "cost_per_ha_inr": [
+        100000,
+        140000
+      ],
+      "verification": {
+        "rdf": "verified",
+        "sowing": "verified",
+        "cost": "estimate",
+        "sources": [
+          "Onion NPKS recommendation 110:40:60:40 with FYM; sulphur 30-45 kg/ha by soil S (compiled vegetable recommendations, jau.in)",
+          "MPKV Rahuri, Vegetable research recommendations (mpkv.ac.in/Uploads/Research/12. Vegetable_20200110053854.pdf)"
+        ],
+        "note": "Plus 30-45 kg/ha sulphur depending on soil S. Earlier value 100:50:50 corrected."
+      }
+    },
+    "Jowar": {
+      "marathi": "ज्वारी",
+      "type": "cereal",
+      "seasons": [
+        "kharif",
+        "rabi"
+      ],
+      "sowing_months": [
+        6,
+        7,
+        9,
+        10
+      ],
+      "duration_days": [
+        100,
+        120
+      ],
+      "water_need": "low",
+      "water_mm": [
+        400,
+        500
+      ],
+      "rdf": {
+        "N": 80,
+        "P2O5": 40,
+        "K2O": 40
+      },
+      "cost_per_ha_inr": [
+        30000,
+        40000
+      ],
+      "verification": {
+        "rdf": "verified",
+        "sowing": "verified",
+        "cost": "estimate",
+        "sources": [
+          "MPKV Rahuri, Sorghum research recommendations (mpkv.ac.in/Uploads/Research/3. Sorghum_20200110053526.pdf)"
+        ],
+        "note": "80:40:40 + 5 t FYM is MPKV's general dose for rabi sorghum in Western Maharashtra; rainfed medium-deep soils use about 50:25:0."
+      }
+    },
+    "Bajra": {
+      "marathi": "बाजरी",
+      "type": "cereal",
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "sowing_months": [
+        1,
+        2,
+        6,
+        7
+      ],
+      "duration_days": [
+        75,
+        90
+      ],
+      "water_need": "low",
+      "water_mm": [
+        350,
+        450
+      ],
+      "rdf": {
+        "N": 50,
+        "P2O5": 25,
+        "K2O": 25
+      },
+      "cost_per_ha_inr": [
+        25000,
+        35000
+      ],
+      "verification": {
+        "rdf": "partial",
+        "sowing": "verified",
+        "cost": "estimate",
+        "sources": [
+          "On-farm trial, Satara district (Western Maharashtra scarcity zone): pearl millet RDF 50:25:25 (phytojournal.com 2019)",
+          "MPKV Rahuri, Pearl millet research recommendations (mpkv.ac.in/Uploads/Research/2. Pearlmillet_20200110053501.pdf)"
+        ],
+        "note": "50:25:25 from a Western Maharashtra on-farm study; MPKV's Dhule-region recommendation is 60:30:30."
+      }
+    },
+    "Wheat": {
+      "marathi": "गहू",
+      "type": "cereal",
+      "seasons": [
+        "rabi"
+      ],
+      "sowing_months": [
+        11,
+        12
+      ],
+      "duration_days": [
+        110,
+        120
+      ],
+      "water_need": "medium",
+      "water_mm": [
+        450,
+        650
+      ],
+      "rdf": {
+        "N": 120,
+        "P2O5": 60,
+        "K2O": 40
+      },
+      "cost_per_ha_inr": [
+        50000,
+        65000
+      ],
+      "verification": {
+        "rdf": "verified",
+        "sowing": "verified",
+        "cost": "cross-checked",
+        "sources": [
+          "MPKV Rahuri, Wheat research recommendations (mpkv.ac.in/Uploads/Research/4. Wheat_20200110053545.pdf)",
+          "MPKV Rahuri, Research Recommendations released during 2024 (mpkv.ac.in/Uploads/Research/2024-English_20241017111319.pdf)",
+          "DES cost of cultivation, Wheat, Maharashtra: total about Rs 60,000/ha in 2020 (ceicdata.com)"
+        ],
+        "note": "Timely sowing 16 Nov - 1 Dec; late sowing up to about 23 Dec at 90:60:40."
+      }
+    },
+    "Groundnut": {
+      "marathi": "भुईमूग",
+      "type": "oilseed",
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "sowing_months": [
+        1,
+        2,
+        6,
+        7
+      ],
+      "duration_days": [
+        100,
+        120
+      ],
+      "water_need": "medium",
+      "water_mm": [
+        500,
+        700
+      ],
+      "rdf": {
+        "N": 25,
+        "P2O5": 50,
+        "K2O": 0
+      },
+      "cost_per_ha_inr": [
+        45000,
+        60000
+      ],
+      "verification": {
+        "rdf": "partial",
+        "sowing": "verified",
+        "cost": "estimate",
+        "sources": [
+          "Dr. PDKV Akola groundnut trial using RDF 25:50:0 (ojs.pphouse.org, IJEP)",
+          "MPKV Rahuri, AICRP on Groundnut (mpkv.ac.in/Uploads/Research/2. AICRP on Groundnut_20250822044155.pdf)"
+        ],
+        "note": "Some Maharashtra trials use 25:50:30 instead of 25:50:0."
+      }
+    },
+    "Soybean": {
+      "marathi": "सोयाबीन",
+      "type": "oilseed",
+      "seasons": [
+        "kharif"
+      ],
+      "sowing_months": [
+        6,
+        7
+      ],
+      "duration_days": [
+        90,
+        110
+      ],
+      "water_need": "medium",
+      "water_mm": [
+        450,
+        700
+      ],
+      "rdf": {
+        "N": 50,
+        "P2O5": 75,
+        "K2O": 45
+      },
+      "cost_per_ha_inr": [
+        35000,
+        45000
+      ],
+      "verification": {
+        "rdf": "verified",
+        "sowing": "verified",
+        "cost": "estimate",
+        "sources": [
+          "MPKV Rahuri, Research Recommendations released during 2024 (mpkv.ac.in/Uploads/Research/2024-English_20241017111319.pdf)",
+          "Dr. PDKV Akola, Research Recommendations 2023 (pdkv.ac.in/Circulars/Recom-2023English.pdf)"
+        ],
+        "note": "MPKV also recommends 20 kg/ha bentonite sulphur on S-deficient soils."
+      }
+    },
+    "Cucumber": {
+      "marathi": "काकडी",
+      "type": "vegetable",
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "sowing_months": [
+        1,
+        2,
+        3,
+        6,
+        7
+      ],
+      "duration_days": [
+        60,
+        80
+      ],
+      "water_need": "medium",
+      "water_mm": [
+        400,
+        600
+      ],
+      "rdf": {
+        "N": 100,
+        "P2O5": 50,
+        "K2O": 50
+      },
+      "cost_per_ha_inr": [
+        60000,
+        90000
+      ],
+      "verification": {
+        "rdf": "unverified",
+        "sowing": "general",
+        "cost": "estimate",
+        "sources": [],
+        "note": "No Maharashtra recommendation found online; an old MPKV trial used 200:50:100 for variety Himangi."
+      }
+    },
+    "Ragi": {
+      "marathi": "नाचणी",
+      "type": "cereal",
+      "seasons": [
+        "kharif"
+      ],
+      "sowing_months": [
+        6,
+        7
+      ],
+      "duration_days": [
+        100,
+        120
+      ],
+      "water_need": "low",
+      "water_mm": [
+        350,
+        450
+      ],
+      "rdf": {
+        "N": 80,
+        "P2O5": 40,
+        "K2O": 0
+      },
+      "cost_per_ha_inr": [
+        25000,
+        35000
+      ],
+      "verification": {
+        "rdf": "verified",
+        "sowing": "general",
+        "cost": "estimate",
+        "sources": [
+          "Dr. BSKKV Dapoli study citing finger millet RDF 80:40:0 (epubs.icar.org.in, JISCAR)"
+        ],
+        "note": "Konkan university (Dapoli) recommendation; earlier value 60:30:30 corrected."
+      }
+    },
+    "Spinach": {
+      "marathi": "पालक",
+      "type": "vegetable",
+      "seasons": [
+        "rabi",
+        "summer"
+      ],
+      "sowing_months": [
+        9,
+        10,
+        11,
+        12,
+        1,
+        2
+      ],
+      "duration_days": [
+        40,
+        60
+      ],
+      "water_need": "low",
+      "water_mm": [
+        250,
+        350
+      ],
+      "rdf": {
+        "N": 50,
+        "P2O5": 25,
+        "K2O": 25
+      },
+      "cost_per_ha_inr": [
+        30000,
+        50000
+      ],
+      "verification": {
+        "rdf": "unverified",
+        "sowing": "general",
+        "cost": "estimate",
+        "sources": [],
+        "note": "No Maharashtra recommendation found online."
+      }
+    },
+    "Cabbage": {
+      "marathi": "कोबी",
+      "type": "vegetable",
+      "seasons": [
+        "kharif",
+        "rabi"
+      ],
+      "sowing_months": [
+        6,
+        7,
+        9,
+        10,
+        11
+      ],
+      "duration_days": [
+        90,
+        120
+      ],
+      "water_need": "medium",
+      "water_mm": [
+        380,
+        500
+      ],
+      "rdf": {
+        "N": 120,
+        "P2O5": 60,
+        "K2O": 60
+      },
+      "cost_per_ha_inr": [
+        70000,
+        100000
+      ],
+      "verification": {
+        "rdf": "partial",
+        "sowing": "general",
+        "cost": "estimate",
+        "sources": [
+          "Dr. BSKKV Dapoli, Department of Agronomy recommendations: cabbage 120:60:60 (api.dbskkv.org)",
+          "MPKV Rahuri, Vegetable research recommendations (mpkv.ac.in/Uploads/Research/12. Vegetable_20200110053854.pdf)"
+        ],
+        "note": "Konkan university dose; MPKV gives only a yield-target equation for rabi cabbage. Earlier value 150:75:75 corrected."
+      }
+    },
+    "Indian Beans": {
+      "marathi": "वाल/घेवडा",
+      "type": "pulse",
+      "seasons": [
+        "kharif",
+        "rabi"
+      ],
+      "sowing_months": [
+        6,
+        7,
+        10,
+        11
+      ],
+      "duration_days": [
+        90,
+        120
+      ],
+      "water_need": "low",
+      "water_mm": [
+        300,
+        400
+      ],
+      "rdf": {
+        "N": 25,
+        "P2O5": 50,
+        "K2O": 0
+      },
+      "cost_per_ha_inr": [
+        35000,
+        50000
+      ],
+      "verification": {
+        "rdf": "partial",
+        "sowing": "general",
+        "cost": "estimate",
+        "sources": [
+          "Hyacinth bean basal dose for bush types, N 25 + P 50 kg/ha (secondary course material, agridots.com)"
+        ],
+        "note": "Only a secondary source found."
+      }
+    },
+    "Methi": {
+      "marathi": "मेथी",
+      "type": "vegetable",
+      "seasons": [
+        "rabi",
+        "summer"
+      ],
+      "sowing_months": [
+        10,
+        11,
+        12,
+        1,
+        2
+      ],
+      "duration_days": [
+        30,
+        40
+      ],
+      "water_need": "low",
+      "water_mm": [
+        250,
+        350
+      ],
+      "rdf": {
+        "N": 40,
+        "P2O5": 40,
+        "K2O": 20
+      },
+      "cost_per_ha_inr": [
+        25000,
+        40000
+      ],
+      "verification": {
+        "rdf": "partial",
+        "sowing": "general",
+        "cost": "estimate",
+        "sources": [
+          "ICAR Ajmer fenugreek trial, fertilizer level 40:40:20 (phytojournal.com 2018)"
+        ],
+        "note": "Trial fertilizer level, not an official package of practices."
+      }
+    },
+    "Brinjal": {
+      "marathi": "वांगी",
+      "type": "vegetable",
+      "seasons": [
+        "kharif",
+        "rabi",
+        "summer"
+      ],
+      "sowing_months": [
+        1,
+        2,
+        6,
+        7,
+        9,
+        10
+      ],
+      "duration_days": [
+        120,
+        150
+      ],
+      "water_need": "medium",
+      "water_mm": [
+        500,
+        700
+      ],
+      "rdf": {
+        "N": 120,
+        "P2O5": 80,
+        "K2O": 120
+      },
+      "cost_per_ha_inr": [
+        80000,
+        120000
+      ],
+      "verification": {
+        "rdf": "verified",
+        "sowing": "general",
+        "cost": "estimate",
+        "sources": [
+          "MPKV Rahuri, Vegetable research recommendations (mpkv.ac.in/Uploads/Research/12. Vegetable_20200110053854.pdf)"
+        ],
+        "note": "MPKV recommended dose (given with a drip fertigation schedule); earlier value 100:50:50 corrected."
+      }
+    }
+  }
+}

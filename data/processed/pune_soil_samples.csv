@@ -1,0 +1,131 @@
+pH,OC,N,P,K,S,Zn,B,Fe,Mn,Cu,village,sub_district,year,crops
+4.7,0.53,132.0,VH,M,L,L,H,M,H,H,Vadeshwar,Mawal,2016,Grams;Onion;Rice;Soybean;Sugarcane
+4.8,0.5,125.0,VH,M,M,L,H,M,H,H,Vadeshwar,Mawal,2016,Grams;Onion;Rice;Soybean;Sugarcane
+5.5,0.6,150.0,VH,H,M,L,M,H,H,H,Vadeshwar,Mawal,2016,Grams;Onion;Rice;Soybean;Sugarcane
+5.5,0.66,165.0,M,M,M,L,L,H,H,H,Vadeshwar,Mawal,2016,Grams;Onion;Rice;Soybean;Sugarcane
+5.6,0.16,40.0,M,VH,M,M,M,H,H,H,Lohgad,Mawal,2016,Onion;Rice;Soybean
+5.6,0.45,105.0,M,M,L,L,L,H,H,H,Lohgad,Mawal,2016,Onion;Rice;Soybean
+5.6,0.63,157.0,H,L,L,L,M,H,H,H,Vadeshwar,Mawal,2016,Grams;Onion;Rice;Soybean;Sugarcane
+5.6,0.72,180.0,VH,L,L,L,H,H,H,H,Vadeshwar,Mawal,2016,Grams;Onion;Rice;Soybean;Sugarcane
+5.6,0.86,215.0,M,M,L,M,L,H,H,H,Lohgad,Mawal,2016,Onion;Rice;Soybean
+5.7,0.41,10.25,L,VH,L,M,L,H,H,H,Lohgad,Mawal,2016,Onion;Rice;Soybean
+5.9,0.85,212.0,M,M,M,M,H,H,H,H,Vadeshwar,Mawal,2016,Grams;Onion;Rice;Soybean;Sugarcane
+6.0,1.02,2.55,H,VH,H,H,M,H,H,H,Lohgad,Mawal,2016,Onion;Rice;Soybean
+6.5,0.88,220.0,H,L,M,L,H,L,H,H,Aambade,Bhor,2017,Grams;Jowar;Ragi;Rice
+6.5,0.99,247.5,M,M,H,L,H,L,H,H,Aambade,Bhor,2017,Grams;Jowar;Ragi;Rice
+6.6,0.22,55.0,M,L,M,M,M,M,H,H,Aambade,Bhor,2017,Grams;Jowar;Ragi;Rice
+6.6,0.62,154.0,M,L,L,L,L,L,H,H,Aambade,Bhor,2017,Grams;Jowar;Ragi;Rice
+6.6,0.68,170.5,M,M,L,L,L,L,H,H,Aambade,Bhor,2017,Grams;Jowar;Ragi;Rice
+6.8,0.4,99.0,M,L,M,H,M,L,H,H,Aambade,Bhor,2017,Grams;Jowar;Ragi;Rice
+6.81,1.44,339.0,M,M,H,L,M,M,H,M,Alandi,Haveli,2018,Bajra;Cabbage;Onion;Sugarcane
+6.83,1.74,383.0,M,M,H,M,L,M,H,M,Alandi,Haveli,2018,Bajra;Cabbage;Methi;Onion;Spinach;Sugarcane
+6.9,0.46,115.5,M,L,M,M,M,M,H,H,Aambade,Bhor,2017,Grams;Jowar;Ragi;Rice
+6.9,0.48,121.0,M,M,M,L,H,L,H,H,Aambade,Bhor,2017,Grams;Jowar;Ragi;Rice
+7.0,0.39,273.0,M,M,M,L,M,L,M,L,Alandi,Haveli,2016,Onion;Spinach
+7.01,1.17,351.0,M,M,H,M,L,M,H,M,Alandi,Haveli,2018,Bajra;Cabbage;Methi;Onion;Spinach;Sugarcane
+7.02,1.95,339.0,M,M,H,L,M,L,H,M,Alandi,Haveli,2018,Bajra;Cabbage;Methi;Onion;Spinach;Sugarcane
+7.11,0.9,383.0,L,H,H,L,M,M,H,M,Alandi,Haveli,2018,Bajra;Cabbage;Methi;Onion;Spinach;Wheat
+7.2,0.26,66.0,M,L,M,M,M,M,H,H,Aambade,Bhor,2017,Grams;Jowar;Ragi;Rice
+7.2,0.3,75.0,L,M,L,L,M,L,L,M,Akole,Indapur,2015,Maize;Sugarcane
+7.2,0.36,252.0,L,M,L,L,L,M,L,M,Vadeshwar,Mawal,2018,Groundnut;Indian Beans;Rice;Wheat
+7.2,0.99,383.0,M,L,H,M,L,M,H,M,Alandi,Haveli,2018,Bajra;Cabbage;Methi;Onion;Spinach;Sugarcane
+7.21,0.63,441.0,L,H,L,L,L,M,L,M,Vadeshwar,Mawal,2018,Grams;Groundnut;Indian Beans;Rice;Wheat
+7.21,1.8,245.0,L,M,H,M,L,M,H,M,Alandi,Haveli,2018,Bajra;Cabbage;Methi;Onion;Spinach;Sugarcane
+7.22,1.77,377.0,L,H,H,L,M,M,H,M,Alandi,Haveli,2018,Bajra;Cabbage;Onion;Spinach
+7.22,1.77,377.0,L,H,H,L,M,M,H,M,Alandi,Haveli,2019,Spinach
+7.23,0.45,112.0,L,VH,L,L,M,L,L,M,Akole,Indapur,2015,Maize;Sugarcane
+7.23,0.76,285.0,L,M,H,L,L,M,H,M,Dehu,Haveli,2018,Grams;Onion;Rice;Soybean;Wheat
+7.24,0.24,60.0,L,VH,L,L,M,L,L,L,Akole,Indapur,2015,Maize;Sugarcane
+7.24,0.29,201.6,L,M,L,L,M,M,L,M,Vadeshwar,Mawal,2018,Bajra;Groundnut;Indian Beans;Jowar;Rice;Soybean
+7.25,0.09,63.0,M,M,L,L,M,M,L,M,Vadeshwar,Mawal,2018,Bajra;Groundnut;Indian Beans;Jowar;Rice;Soybean
+7.25,0.14,100.8,VL,M,L,L,M,M,L,M,Vadeshwar,Mawal,2018,Bajra;Groundnut;Jowar;Rice;Soybean;Wheat
+7.25,0.33,82.0,L,H,L,L,M,L,L,M,Akole,Indapur,2014,Maize;Sugarcane
+7.25,0.48,120.0,L,M,L,L,M,L,L,M,Akole,Indapur,2015,Maize;Sugarcane
+7.25,0.51,127.0,M,H,L,L,M,L,L,M,Akole,Indapur,2014,Maize;Sugarcane
+7.25,0.63,157.0,M,H,L,L,M,L,L,M,Akole,Indapur,2015,Maize;Sugarcane
+7.26,0.33,82.0,L,H,L,L,M,L,L,M,Akole,Indapur,2015,Maize
+7.27,0.57,142.0,M,VH,L,L,M,L,L,M,Akole,Indapur,2015,Maize;Sugarcane
+7.28,0.27,67.0,L,H,L,L,M,L,L,M,Akole,Indapur,2015,Maize;Sugarcane
+7.28,0.36,90.0,L,VH,L,L,M,L,L,M,Akole,Indapur,2014,Maize;Sugarcane
+7.28,0.36,90.0,L,VH,L,L,M,L,L,M,Unknown,Unknown,,Maize;Sugarcane
+7.29,0.24,60.0,L,H,L,L,M,L,L,L,Akole,Indapur,2015,Maize;Sugarcane
+7.3,0.52,365.4,L,M,L,L,L,M,L,M,Vadeshwar,Mawal,2018,Bajra;Groundnut;Jowar;Rice;Soybean;Wheat
+7.3,0.66,165.0,H,M,L,L,L,L,H,H,Aambade,Bhor,2017,Grams;Jowar;Ragi;Rice
+7.31,0.32,226.8,M,M,L,L,M,M,L,M,Vadeshwar,Mawal,2018,Bajra;Groundnut;Indian Beans;Jowar;Rice;Soybean
+7.31,0.84,210.0,M,M,L,M,M,L,M,M,Akole,Indapur,2015,Maize;Sugarcane
+7.31,1.2,320.0,L,M,H,M,L,M,H,M,Alandi,Haveli,2018,Bajra;Cabbage;Methi;Onion;Spinach
+7.32,0.45,112.0,L,VH,L,L,M,L,L,M,Akole,Indapur,2015,Maize;Sugarcane
+7.32,0.46,163.0,M,H,M,M,L,M,H,M,Dehu,Haveli,2018,Grams;Onion;Rice;Soybean;Wheat
+7.32,1.32,326.0,M,M,H,L,L,M,H,M,Alandi,Haveli,2018,Bajra;Cabbage;Methi;Onion;Spinach;Sugarcane
+7.33,0.27,67.0,L,H,L,L,M,L,L,M,Akole,Indapur,2014,Maize;Sugarcane
+7.35,0.34,239.4,M,M,L,L,M,M,L,M,Vadeshwar,Mawal,2018,Bajra;Groundnut;Indian Beans;Jowar;Rice;Soybean;Wheat
+7.35,0.36,90.0,L,H,L,L,M,L,L,M,Akole,Indapur,2015,Maize;Sugarcane
+7.35,0.42,294.0,M,H,L,M,L,L,L,H,Akole,Indapur,2017,Groundnut;Maize;Sugarcane
+7.35,0.45,115.0,L,H,L,L,M,L,L,M,Akole,Indapur,2014,Maize;Sugarcane
+7.35,0.45,315.0,M,H,L,M,L,L,L,M,Akole,Indapur,2017,Groundnut;Maize;Sugarcane
+7.35,2.03,1423.8,L,M,L,L,M,H,L,M,Amboli,Khed,2017,Cucumber;Grams;Maize;Onion;Rice;Wheat
+7.4,0.29,201.6,L,L,L,L,L,M,L,M,Vadeshwar,Mawal,2018,Bajra;Groundnut;Jowar;Rice;Soybean;Wheat
+7.4,0.3,75.0,L,VH,L,L,M,L,L,M,Akole,Indapur,2015,Maize;Sugarcane
+7.4,0.33,231.0,M,H,L,M,L,L,L,H,Akole,Indapur,2017,Groundnut;Maize;Sugarcane
+7.4,0.33,231.0,M,H,L,M,L,L,L,M,Akole,Indapur,2017,Groundnut;Maize;Sugarcane
+7.4,0.66,165.0,M,H,L,L,M,L,L,M,Akole,Indapur,2015,Maize;Sugarcane
+7.41,0.27,189.0,M,H,L,M,L,L,L,M,Akole,Indapur,2017,Groundnut;Maize;Sugarcane
+7.42,0.63,157.0,M,M,L,L,M,L,L,M,Akole,Indapur,2015,Maize;Sugarcane
+7.43,0.39,97.0,L,H,L,L,M,L,L,M,Akole,Indapur,2015,Maize;Sugarcane
+7.43,0.42,294.0,M,H,L,M,L,L,L,H,Akole,Indapur,2017,Groundnut;Maize;Sugarcane
+7.44,0.48,120.0,M,M,L,L,M,L,L,M,Akole,Indapur,2015,Maize;Sugarcane
+7.44,0.95,667.8,L,VH,L,L,M,M,L,M,Amboli,Khed,2017,Cucumber;Grams;Maize;Onion;Rice;Wheat
+7.45,0.75,187.0,M,H,L,L,M,L,M,M,Akole,Indapur,2015,Maize;Sugarcane
+7.47,0.45,315.0,L,H,L,H,L,L,L,M,Akole,Indapur,2017,Groundnut;Maize;Sugarcane
+7.49,0.33,231.0,M,H,L,H,L,L,L,H,Akole,Indapur,2017,Groundnut;Maize;Sugarcane
+7.49,1.06,422.0,M,H,M,L,M,M,H,M,Dehu,Haveli,2018,Grams;Onion;Rice;Soybean;Wheat
+7.5,0.3,75.0,L,VH,L,L,M,L,L,M,Akole,Indapur,2015,Maize;Sugarcane
+7.5,0.76,289.0,M,VH,H,L,M,M,H,M,Dehu,Haveli,2018,Grams;Onion;Rice;Soybean;Wheat
+7.51,0.42,294.0,M,H,L,M,L,L,M,M,Akole,Indapur,2017,Groundnut;Maize;Sugarcane
+7.53,0.59,415.8,L,H,L,L,M,M,L,M,Lohgad,Mawal,2018,Bajra;Grams;Groundnut;Maize;Rice
+7.57,0.39,273.0,M,H,L,L,L,L,L,M,Akole,Indapur,2017,Groundnut;Maize;Sugarcane
+7.59,0.54,135.0,M,VH,L,L,M,L,L,M,Akole,Indapur,2015,Maize;Sugarcane
+7.61,0.76,253.0,M,H,H,L,M,M,H,M,Dehu,Haveli,2018,Rice;Soybean;Wheat
+7.61,1.14,307.0,L,H,H,M,L,M,H,M,Alandi,Haveli,2018,Bajra;Brinjal;Cabbage;Methi;Spinach
+7.62,2.1,370.0,L,VH,H,L,L,M,H,M,Alandi,Haveli,2018,Bajra;Cabbage;Methi;Onion;Spinach;Sugarcane
+7.75,0.46,145.0,M,H,H,L,L,M,H,H,Dehu,Haveli,2018,Grams;Onion;Rice;Soybean;Wheat
+7.76,0.88,617.4,L,VH,L,L,M,M,L,M,Lohgad,Mawal,2018,Grams;Groundnut;Jowar;Maize;Rice
+7.8,0.39,273.0,M,H,L,M,L,L,M,M,Akole,Indapur,2017,Groundnut;Maize;Sugarcane
+7.8,0.43,302.4,L,H,L,L,L,M,L,M,Lohgad,Mawal,2018,Bajra;Grams;Groundnut;Jowar;Rice
+7.81,0.46,170.0,M,H,H,L,L,M,H,M,Dehu,Haveli,2018,Grams;Onion;Rice;Soybean;Wheat
+7.83,0.46,150.0,L,M,H,L,M,M,H,M,Dehu,Haveli,2018,Brinjal;Grams;Onion;Rice;Soybean;Wheat
+7.83,0.86,604.8,L,M,L,L,L,M,L,M,Lohgad,Mawal,2018,Bajra;Grams;Groundnut;Jowar;Rice;Sugarcane
+7.85,0.76,266.0,L,M,M,L,L,M,H,M,Dehu,Haveli,2018,Brinjal;Grams;Onion;Rice;Soybean;Wheat
+7.85,0.99,693.0,L,VH,L,M,M,M,L,M,Amboli,Khed,2017,Cucumber;Grams;Maize;Onion;Rice;Wheat
+7.87,0.46,189.0,M,M,H,L,M,M,H,M,Dehu,Haveli,2018,Grams;Onion;Rice;Soybean;Wheat
+7.88,0.68,478.8,L,M,L,L,M,M,L,M,Lohgad,Mawal,2018,Bajra;Grams;Groundnut;Rice;Sugarcane;Wheat
+7.89,0.7,491.4,L,H,L,L,L,M,L,M,Lohgad,Mawal,2018,Grams;Groundnut;Jowar;Rice;Wheat
+7.91,1.01,705.6,M,H,L,L,M,M,L,M,Amboli,Khed,2017,Cucumber;Grams;Maize;Onion;Rice;Wheat
+7.92,0.85,296.1,L,M,H,M,L,M,H,M,Dehu,Haveli,2018,Brinjal;Grams;Onion;Rice;Soybean;Wheat
+7.94,0.74,516.6,L,H,L,L,M,M,L,M,Lohgad,Mawal,2018,Grams;Groundnut;Jowar;Maize;Rice
+7.94,1.06,465.0,L,H,H,L,M,M,H,M,Dehu,Haveli,2018,Brinjal;Grams;Onion;Rice;Soybean;Wheat
+7.98,0.49,340.2,L,H,L,L,L,M,L,M,Lohgad,Mawal,2018,Bajra;Grams;Groundnut;Rice;Sugarcane;Wheat
+8.01,1.06,421.0,L,M,H,M,L,M,H,M,Dehu,Haveli,2018,Brinjal;Grams;Onion;Rice;Soybean;Wheat
+8.12,1.5,345.0,M,M,H,L,M,M,H,M,Alandi,Haveli,2018,Bajra;Cabbage;Methi;Onion;Spinach;Sugarcane
+8.13,1.86,282.0,L,H,H,M,L,M,H,M,Alandi,Haveli,2018,Bajra;Cabbage;Jowar;Onion;Spinach;Sugarcane
+8.16,0.48,338.17,M,M,H,L,M,M,M,M,Alandi,Haveli,2018,Grams;Groundnut;Jowar;Rice;Soybean
+8.18,1.09,380.1,M,H,H,M,M,M,H,M,Dehu,Haveli,2018,Brinjal;Grams;Onion;Rice;Soybean;Wheat
+8.26,0.99,693.0,VL,VH,L,L,L,M,L,M,Karunj,Mawal,2017,Cucumber;Grams;Indian Beans;Maize;Sugarcane
+8.26,0.99,693.0,VL,VH,L,L,L,M,L,M,Vadeshwar,Mawal,2018,Bajra;Rice;Sugarcane;Wheat
+8.29,1.57,365.4,L,VH,M,L,L,M,H,M,Dehu,Haveli,2018,Brinjal;Grams;Onion;Rice;Soybean;Wheat
+8.31,0.86,604.8,M,VH,L,L,L,M,L,M,Karunj,Mawal,2017,Bajra;Cucumber;Grams;Jowar;Onion;Rice
+8.32,0.52,180.6,L,H,H,L,L,M,H,M,Dehu,Haveli,2018,Brinjal;Grams;Onion;Rice;Soybean;Wheat
+8.32,0.55,191.1,M,M,H,L,L,M,H,M,Dehu,Haveli,2018,Brinjal;Grams;Onion;Rice;Soybean;Wheat
+8.34,0.67,466.2,M,VH,L,L,M,M,L,M,Karunj,Mawal,2017,Bajra;Cucumber;Grams;Indian Beans;Jowar;Rice
+8.34,0.67,466.2,M,VH,L,L,M,M,L,M,Vadeshwar,Mawal,2018,Bajra;Groundnut;Indian Beans;Jowar;Rice;Soybean
+8.37,0.92,642.6,M,M,L,L,L,M,L,M,Karunj,Mawal,2017,Bajra;Cucumber;Grams;Indian Beans;Jowar;Rice
+8.42,0.52,365.4,M,VH,L,L,M,M,L,M,Karunj,Mawal,2017,Bajra;Cucumber;Grams;Indian Beans;Jowar;Rice
+8.44,0.5,366.4,VL,VH,L,L,L,M,L,M,Karunj,Mawal,2017,Cucumber;Grams;Indian Beans;Jowar;Rice;Sugarcane
+8.44,0.77,541.8,VL,H,L,L,M,M,L,M,Karunj,Mawal,2017,Bajra;Cucumber;Grams;Indian Beans;Jowar;Rice
+8.45,0.65,453.6,VL,M,L,L,M,L,L,M,Karunj,Mawal,2017,Bajra;Cucumber;Grams;Indian Beans;Jowar;Rice
+8.46,1.15,806.4,VL,VH,L,L,L,M,L,M,Karunj,Mawal,2017,Bajra;Cucumber;Grams;Indian Beans;Jowar;Rice
+8.5,0.79,275.1,M,M,M,L,L,M,H,M,Dehu,Haveli,2018,Brinjal;Grams;Onion;Rice;Soybean;Wheat
+8.51,1.1,768.6,M,VH,L,L,M,M,L,M,Karunj,Mawal,2017,Bajra;Cucumber;Grams;Jowar;Onion;Rice
+8.67,1.0,348.6,L,H,H,M,M,M,H,M,Dehu,Haveli,2018,Brinjal;Grams;Onion;Rice;Soybean;Wheat
+8.78,0.88,306.6,M,M,M,M,L,M,H,M,Dehu,Haveli,2018,Brinjal;Grams;Onion;Rice;Soybean;Wheat
+9.57,0.82,285.6,L,H,M,M,L,M,H,M,Dehu,Haveli,2018,Brinjal;Grams;Onion;Rice;Soybean;Wheat

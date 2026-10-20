@@ -1,0 +1,71 @@
+{
+  "dataset": {
+    "aligned_rows": 1651,
+    "unique_soil_crop_pairs": 562,
+    "class_counts": {
+      "combination_1": {
+        "USP": 376,
+        "US": 105,
+        "USM": 80,
+        "NOT NEEDED": 1
+      },
+      "combination_2": {
+        "NUP": 161,
+        "NSP": 86,
+        "DUP": 79,
+        "NS": 51,
+        "AUP": 49,
+        "NU": 43,
+        "NUM": 35,
+        "DUM": 22,
+        "NP": 19,
+        "DU": 11,
+        "NM": 3,
+        "N": 2,
+        "NOT NEEDED": 1
+      }
+    }
+  },
+  "evaluation": {
+    "method": "5x repeated 5-fold CV, grouped by soil profile",
+    "combination_1": {
+      "accuracy": {
+        "mean": 0.9619,
+        "std": 0.0031
+      },
+      "macro_f1": {
+        "mean": 0.7163,
+        "std": 0.0027
+      },
+      "crop_majority_baseline_accuracy": {
+        "mean": 0.8221,
+        "std": 0.0
+      }
+    },
+    "combination_2": {
+      "accuracy": {
+        "mean": 0.8705,
+        "std": 0.0227
+      },
+      "macro_f1": {
+        "mean": 0.6612,
+        "std": 0.0173
+      },
+      "crop_majority_baseline_accuracy": {
+        "mean": 0.6413,
+        "std": 0.005
+      }
+    }
+  },
+  "organic_rule": {
+    "unique_soil_samples": 129,
+    "share": {
+      "FYM": 0.822,
+      "Green Manure": 0.07,
+      "Organic Manure": 0.054,
+      "Vermicompost": 0.054
+    },
+    "most_common": "FYM",
+    "note": "A Random Forest predicting organic advice scored no better than always answering the most common value, so the app shows it as a rule."
+  }
+}

@@ -1,0 +1,14 @@
+Column,Data Type,Type,Allowed Values,Description
+N,String,Input,"Very Low, Low, Medium, High, Very High","Nitrogen, primary soil macronutrient"
+P,String,Input,"Very Low, Low, Medium, High, Very High","Phosphorus, primary soil macronutrient"
+K,String,Input,"Very Low, Low, Medium, High, Very High","Potassium, primary soil macronutrient"
+pH,String,Input,"Moderately Alkaline, Neutral, Slightly acidic, Strongly Alkaline, Highly Acidic","Potential of Hydrogen, Soil Chemical Property"
+OC,String,Input,"Very Low, Low, Medium, High, Very High","Organic Carbon, Soil Health Parameter"
+S,String,Input,"Low, Medium, High","Sulfur, secondary macronutrient"
+Zn,String,Input,"Low, Medium, High","Zinc, macronutrient"
+B,String,Input,"Low, Medium, High","Boron, macronutrient"
+Cu,String,Input,"Low, Medium, High","Copper, macronutrient"
+Fe,String,Input,"Low, Medium, High","Iron, macronutrient"
+Mn,String,Input,"Low, Medium, High","Manganese, macronutrient"
+Fertilizer Combination1,String,Output,"Urea Super Phosphate (USP), Urea Super Phosphate Mixture (USM), Urea Potash (UP)",Target Variable with 3 categories
+Fertilizer Combination2,String,Output,"Nitrogen Urea Potash (NUP), DAP Urea Potash (DUP), Nitrogen Single Super Phosphate (NSP), Nitrogen Urea (NU), Nitrogen Sulphur (NS), Nitrogen Phosphate (NP)",Target Variable with 6 categories

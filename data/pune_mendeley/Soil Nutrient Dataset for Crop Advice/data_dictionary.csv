@@ -1,0 +1,12 @@
+Column,Data Type,Unit,Allowed Values,Description
+N,String,N/A,"Very Low, Low, Medium, High, Very High","Nitrogen, primary soil macronutrient"
+P,String,N/A,"Very Low, Low, Medium, High, Very High","Phosphorus, primary soil macronutrient"
+K,String,N/A,"Very Low, Low, Medium, High, Very High","Potassium, primary soil macronutrient"
+pH,String,N/A,"Moderately Alkaline, Neutral, Slightly acidic, Strongly Alkaline, Highly Acidic","Potential of Hydrogen, Soil Chemical Property"
+OC,String,N/A,"Very Low, Low, Medium, High, Very High","Organic Carbon, Soil Health Parameter"
+S,String,N/A,"Low, Medium, High","Sulfur, secondary macronutrient"
+Zn,String,N/A,"Low, Medium, High","Zinc, macronutrient"
+B,String,N/A,"Low, Medium, High","Boron, macronutrient"
+Cu,String,N/A,"Low, Medium, High","Copper, macronutrient"
+Fe,String,N/A,"Low, Medium, High","Iron, macronutrient"
+Mn,String,N/A,"Low, Medium, High","Manganese, macronutrient"

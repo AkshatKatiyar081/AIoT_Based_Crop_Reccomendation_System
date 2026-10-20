@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kisan Mitra — Dashboard</title>
+  <meta name="description" content="Pune crop, fertilizer and irrigation advisory from real Soil Health Card data." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%226%22 fill=%22%23111827%22/%3E%3Cpath d=%22M16 25V13m0 4c-4 0-7-3-7-7 4 0 7 3 7 7zm0-2c0-4 3-7 7-7 0 4-3 7-7 7z%22 stroke=%22%23fff%22 stroke-width=%222%22 fill=%22none%22 stroke-linecap=%22round%22/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="dashboard-body">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <span class="sidebar-title">Kisan Mitra</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#farm-section"       class="nav-link active">Farm &amp; Soil</a>
+      <a href="#recommend-section"  class="nav-link">Recommendation</a>
+      <a href="#irrigation-section" class="nav-link">Irrigation</a>
+      <a href="#history-section"    class="nav-link">History</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="user-info-sidebar">
+        <div class="user-avatar" id="user-avatar">A</div>
+        <div>
+          <div class="user-name-sm" id="user-name-sm">Loading...</div>
+          <div class="user-region-sm">Pune district</div>
+        </div>
+      </div>
+      <button class="btn-logout" onclick="handleLogout()">Logout</button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+
+    <header class="top-header">
+      <div class="header-left">
+        <h2 class="page-title">Farm Dashboard</h2>
+        <p class="page-subtitle">Crop, fertilizer and irrigation advice for Pune district, trained on real Soil Health Card data</p>
+      </div>
+      <div class="header-right">
+        <div class="mqtt-status">
+          <span class="status-dot" id="status-dot"></span>
+          <span id="status-text">Connecting...</span>
+        </div>
+        <div class="last-updated" id="last-updated">—</div>
+      </div>
+    </header>
+
+    <!-- ═══ 1. Farm & Soil ══════════════════════════════════════════════ -->
+    <section id="farm-section" class="dashboard-section">
+      <div class="section-header">
+        <h3 class="section-title">Your Farm</h3>
+      </div>
+
+      <div class="panel farm-setup">
+        <div class="field">
+          <label for="taluka">Taluka</label>
+          <select id="taluka" onchange="onTalukaChange()"></select>
+        </div>
+        <div class="field">
+          <label for="area">Area (hectares)</label>
+          <input type="number" id="area" min="0.1" step="0.1" value="1" />
+        </div>
+        <label class="check">
+          <input type="checkbox" id="irrigation" />
+          <span>I have irrigation (well / canal / drip)</span>
+        </label>
+      </div>
+      <p class="hint hidden" id="taluka-hint"></p>
+
+      <div class="info-grid">
+        <div class="panel">
+          <div class="panel-title">Live weather <span class="muted" id="weather-source"></span></div>
+          <div class="kv-grid" id="weather-box"><span class="muted">Loading…</span></div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Pune district soil profile <span class="muted">(Soil Health Card 2023-25)</span></div>
+          <div id="district-box"><span class="muted">Loading…</span></div>
+        </div>
+      </div>
+
+      <div class="section-header" style="margin-top: 40px;">
+        <h3 class="section-title">Soil Health Card</h3>
+        <button class="btn-secondary" onclick="loadSampleCard()">Load a real Pune soil card</button>
+      </div>
+      <p class="hint" id="sample-info">Enter the values printed on your Soil Health Card, or load a real card from the Pune dataset to try the system.</p>
+
+      <div class="panel">
+        <div class="soil-grid" id="soil-grid"></div>
+      </div>
+    </section>
+
+    <!-- ═══ 2. Recommendation ═══════════════════════════════════════════ -->
+    <section id="recommend-section" class="dashboard-section">
+      <div class="section-header">
+        <h3 class="section-title">Crop Recommendation</h3>
+        <span class="section-badge" id="model-badge">—</span>
+      </div>
+
+      <div class="recommend-panel">
+        <div class="recommend-intro">
+          <p>A <strong>Random Forest model trained on real Pune Soil Health Cards</strong> scores which crops suit your soil.
+          Season rules and expected rainfall then decide what to sow now, and a fertilizer plan is calculated from your soil test.</p>
+        </div>
+        <button class="btn-recommend" id="recommend-btn" onclick="getRecommendation()">
+          <span class="btn-text">Get Recommendation</span>
+          <span class="btn-spinner-lg hidden" id="rec-spinner"></span>
+        </button>
+        <div id="rec-error" class="error-msg hidden"></div>
+      </div>
+
+      <div id="result-container" class="hidden">
+        <div id="confidence-box"></div>
+        <div id="soil-levels" class="pill-row"></div>
+
+        <h4 class="sub-title">Sow now</h4>
+        <div id="result-now" class="result-list"></div>
+
+        <h4 class="sub-title">Suitable later this year</h4>
+        <div id="result-later" class="later-list"></div>
+
+        <button class="btn-primary" id="save-history-btn" onclick="saveRecommendation()">Save selected crop &amp; use it for irrigation</button>
+      </div>
+    </section>
+
+    <!-- ═══ 3. Smart Irrigation ═════════════════════════════════════════ -->
+    <section id="irrigation-section" class="dashboard-section">
+      <div class="section-header">
+        <h3 class="section-title">Smart Irrigation</h3>
+        <span class="section-badge" id="sensor-source-badge">—</span>
+      </div>
+
+      <div class="sensor-grid">
+        <div class="sensor-card">
+          <span class="sensor-label">Soil moisture</span>
+          <span class="sensor-value"><span id="val-moisture">—</span><span class="sensor-unit">%</span></span>
+          <div class="meter"><div class="meter-fill" id="bar-moisture"></div><div class="meter-band" id="band-moisture"></div></div>
+        </div>
+        <div class="sensor-card">
+          <span class="sensor-label">Temperature</span>
+          <span class="sensor-value"><span id="val-temp">—</span><span class="sensor-unit">°C</span></span>
+        </div>
+        <div class="sensor-card">
+          <span class="sensor-label">Humidity</span>
+          <span class="sensor-value"><span id="val-hum">—</span><span class="sensor-unit">%</span></span>
+        </div>
+        <div class="sensor-card pump-card" id="pump-card">
+          <span class="sensor-label">Pump</span>
+          <span class="sensor-value" id="val-pump">—</span>
+        </div>
+      </div>
+
+      <div class="panel irrigation-controls">
+        <div class="field">
+          <label for="irr-crop">Crop in field</label>
+          <select id="irr-crop" onchange="setIrrigation({ crop: this.value || null })"></select>
+        </div>
+        <div class="field">
+          <label>Mode</label>
+          <div class="segmented">
+            <button id="mode-auto"   onclick="setIrrigation({ mode: 'auto' })">Auto</button>
+            <button id="mode-manual" onclick="setIrrigation({ mode: 'manual' })">Manual</button>
+          </div>
+        </div>
+        <div class="field" id="manual-controls">
+          <label>Pump</label>
+          <div class="segmented">
+            <button onclick="setIrrigation({ pump: true })">ON</button>
+            <button onclick="setIrrigation({ pump: false })">OFF</button>
+          </div>
+        </div>
+        <div class="decision" id="decision-text">—</div>
+      </div>
+      <div id="irr-error" class="error-msg hidden"></div>
+    </section>
+
+    <!-- ═══ 4. History ══════════════════════════════════════════════════ -->
+    <section id="history-section" class="dashboard-section">
+      <div class="section-header">
+        <h3 class="section-title">Crop History</h3>
+        <span class="section-badge" id="history-count">0 records</span>
+      </div>
+
+      <div class="history-panel">
+        <div id="history-empty" class="history-empty hidden">
+          <p>No crop history yet. Get your first recommendation above.</p>
+        </div>
+        <div class="history-table-wrap">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>#</th><th>Crop</th><th>Taluka</th><th>Duration</th><th>Sowing</th>
+                <th>Cost/Ha</th><th>Total Cost</th><th>Date</th><th></th>
+              </tr>
+            </thead>
+            <tbody id="history-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>

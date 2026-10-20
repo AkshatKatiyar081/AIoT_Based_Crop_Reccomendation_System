@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "author": "Kisan Mitra",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-dht22", "id": "dht1", "top": -96, "left": 220, "attrs": { "temperature": "29", "humidity": "45" } },
+    { "type": "wokwi-potentiometer", "id": "soil", "top": 110, "left": 240, "attrs": { "label": "Soil moisture" } },
+    { "type": "wokwi-relay-module", "id": "relay1", "top": 250, "left": 220, "attrs": {} },
+    { "type": "wokwi-resistor", "id": "r1", "top": 330, "left": 420, "attrs": { "value": "220" } },
+    { "type": "wokwi-led", "id": "pump_led", "top": 280, "left": 500, "attrs": { "color": "blue", "label": "Pump" } }
+  ],
+  "connections": [
+    [ "esp:TX0", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX0", "$serialMonitor:TX", "", [] ],
+    [ "dht1:VCC", "esp:3V3", "red", [] ],
+    [ "dht1:GND", "esp:GND.1", "black", [] ],
+    [ "dht1:SDA", "esp:D4", "green", [] ],
+    [ "soil:VCC", "esp:3V3", "red", [] ],
+    [ "soil:GND", "esp:GND.1", "black", [] ],
+    [ "soil:SIG", "esp:D34", "orange", [] ],
+    [ "relay1:VCC", "esp:VIN", "red", [] ],
+    [ "relay1:GND", "esp:GND.2", "black", [] ],
+    [ "relay1:IN", "esp:D26", "purple", [] ],
+    [ "relay1:COM", "esp:3V3", "red", [] ],
+    [ "relay1:NO", "r1:1", "blue", [] ],
+    [ "r1:2", "pump_led:A", "blue", [] ],
+    [ "pump_led:C", "esp:GND.2", "black", [] ]
+  ]
+}

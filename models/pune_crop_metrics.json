@@ -1,0 +1,149 @@
+{
+  "dataset": {
+    "raw_rows": 1653,
+    "unique_soil_samples": 130,
+    "unique_soil_profiles": 126,
+    "crops": [
+      "Bajra",
+      "Brinjal",
+      "Cabbage",
+      "Cucumber",
+      "Grams",
+      "Groundnut",
+      "Indian Beans",
+      "Jowar",
+      "Maize",
+      "Methi",
+      "Onion",
+      "Ragi",
+      "Rice",
+      "Soybean",
+      "Spinach",
+      "Sugarcane",
+      "Wheat"
+    ],
+    "crops_per_sample": {
+      "1": 2,
+      "2": 26,
+      "3": 17,
+      "4": 14,
+      "5": 24,
+      "6": 46,
+      "7": 1
+    },
+    "villages": [
+      "Aambade",
+      "Akole",
+      "Alandi",
+      "Amboli",
+      "Dehu",
+      "Karunj",
+      "Lohgad",
+      "Unknown",
+      "Vadeshwar"
+    ]
+  },
+  "evaluation": {
+    "method": "5x repeated 5-fold CV, grouped by identical soil profile",
+    "top_k": 3,
+    "model": {
+      "top1_correct": {
+        "mean": 0.9492,
+        "std": 0.0038
+      },
+      "any_in_top3": {
+        "mean": 0.9877,
+        "std": 0.0038
+      },
+      "precision_at_3": {
+        "mean": 0.8415,
+        "std": 0.0068
+      },
+      "recall_at_3": {
+        "mean": 0.6608,
+        "std": 0.0043
+      }
+    },
+    "popularity_baseline": {
+      "top1_correct": {
+        "mean": 0.5846,
+        "std": 0.0
+      },
+      "any_in_top3": {
+        "mean": 0.9123,
+        "std": 0.0417
+      },
+      "precision_at_3": {
+        "mean": 0.4928,
+        "std": 0.012
+      },
+      "recall_at_3": {
+        "mean": 0.3509,
+        "std": 0.0179
+      }
+    }
+  },
+  "feature_importance": {
+    "OC": 0.1741,
+    "pH": 0.1669,
+    "Fe": 0.1532,
+    "N": 0.1423,
+    "Mn": 0.1105,
+    "S": 0.069,
+    "K": 0.0572,
+    "P": 0.0394,
+    "B": 0.0359,
+    "Cu": 0.0334,
+    "Zn": 0.0183
+  },
+  "bands_used": {
+    "N": [
+      140,
+      280,
+      560,
+      700
+    ],
+    "P": [
+      7,
+      14,
+      28,
+      35
+    ],
+    "K": [
+      100,
+      150,
+      250,
+      300
+    ],
+    "OC": [
+      0.24,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "S": [
+      10,
+      20
+    ],
+    "Zn": [
+      0.6,
+      1.2
+    ],
+    "B": [
+      0.5,
+      1.0
+    ],
+    "Fe": [
+      4.5,
+      9.0
+    ],
+    "Mn": [
+      2.0,
+      4.0
+    ],
+    "Cu": [
+      0.2,
+      0.4
+    ]
+  }
+}
