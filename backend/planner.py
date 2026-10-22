@@ -145,8 +145,12 @@ def plan(soil: dict, total_ha: float, plots: int, irrigated_ha: float, sow_date:
     min_share = min(MIN_SHARE, 1 / plots)
     max_share = max(MAX_SHARE, 1 / plots, (fixed_spec["units"] / units) if fixed_spec else 0)
     chosen = _solve(cands, units, plots, irrigated_units, fixed_spec, min_share, max_share)
+    relaxed = None
     if chosen is None:
-        chosen = _solve(cands, units, plots, irrigated_units, fixed_spec, min_share, 1.0)
+        max_share = 1.0
+        chosen = _solve(cands, units, plots, irrigated_units, fixed_spec, min_share, max_share)
+        relaxed = ("With this much irrigated land, the rain-fed crops must cover more than half the farm, "
+                   "so the half-farm limit per crop was lifted.")
     if chosen is None:
         raise PlanError("No plan fits these limits. Try more irrigated land, fewer plots, or no fixed crop.")
 
@@ -179,5 +183,6 @@ def plan(soil: dict, total_ha: float, plots: int, irrigated_ha: float, sow_date:
                         "needs_irrigation": cd["needs_irrigation"]} for cd in cands],
         "excluded": excluded,
         "confidence": rec["confidence"],
-        "rules": {"step_ha": STEP_HA, "min_share": round(min_share, 2), "max_share": round(max_share, 2)},
+        "rules": {"step_ha": STEP_HA, "min_share": round(min_share, 2), "max_share": round(max_share, 2),
+                  "relaxed": relaxed},
     }

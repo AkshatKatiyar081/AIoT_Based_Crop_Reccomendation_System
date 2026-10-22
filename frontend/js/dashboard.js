@@ -578,6 +578,7 @@ function renderPlan(p) {
             and spreads the price risk across ${p.plots.length} crop${p.plots.length > 1 ? "s" : ""}.</p>` : ""}
         <p class="muted small">Irrigated land used: ${irrigatedUsed} of ${p.irrigated_ha} ha.
           Plot sizes in ${p.rules.step_ha} ha steps; each crop between ${Math.round(p.rules.min_share * 100)}% and ${Math.round(p.rules.max_share * 100)}% of the farm.</p>
+        ${p.rules.relaxed ? `<p class="small tl-warn">⚠ ${esc(p.rules.relaxed)}</p>` : ""}
       </div>
     </div>
 
