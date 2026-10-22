@@ -513,7 +513,96 @@ async function saveRecommendation() {
 
 
 // ─── Irrigation ───────────────────────────────────────────────────────────────
+// ─── Farm plan ────────────────────────────────────────────────────────────────
+const PLOT_COLORS = ["#2E7D5B", "#D9A441", "#3B6EA8", "#BE2823", "#7A5BA6", "#6B6B6B"];
+
+async function makePlan() {
+  const btn = el("plan-btn"), spinner = el("plan-spinner"), errEl = el("plan-error");
+  errEl.classList.add("hidden");
+  el("plan-result").classList.add("hidden");
+  const missing = SOIL_FIELDS.filter(f => el(`soil-${f.key}`).value.trim() === "");
+  if (missing.length) {
+    errEl.textContent = "Fill in the Soil Health Card above first (or load a real Pune soil card).";
+    errEl.classList.remove("hidden");
+    return;
+  }
+  btn.disabled = true;
+  spinner.classList.remove("hidden");
+  try {
+    const fixedCrop = el("plan-fixed").value;
+    const plan = await api("/api/plan", {
+      method: "POST",
+      body: JSON.stringify({
+        total_ha: el("plan-total").value, plots: el("plan-plots").value, irrigated_ha: el("plan-irrigated").value,
+        sowing_date: el("sowing-date").value, taluka: el("taluka").value, soil: readSoilForm(),
+        fixed: fixedCrop ? { crop: fixedCrop, ha: el("plan-fixed-ha").value } : null,
+      }),
+    });
+    renderPlan(plan);
+  } catch (err) {
+    errEl.textContent = err.message;
+    errEl.classList.remove("hidden");
+  } finally {
+    btn.disabled = false;
+    spinner.classList.add("hidden");
+  }
+}
+
+function renderPlan(p) {
+  const out = el("plan-result");
+  const t = p.totals, lo = Math.min(t.low, 0), hi = Math.max(t.high, 0), span = hi - lo || 1;
+  const pos = v => ((v - lo) / span * 100).toFixed(1);
+  const base = p.baseline_single_crop;
+  const irrigatedUsed = p.plots.filter(x => x.needs_irrigation).reduce((s, x) => s + x.ha, 0);
+
+  out.innerHTML = `
+    <div class="panel plan-summary">
+      <div class="detail-label">How your ${p.total_ha} ha is split</div>
+      <div class="split-bar" role="img" aria-label="${esc(p.plots.map(x => `${x.crop} ${x.ha} ha`).join(", "))}">
+        ${p.plots.map((x, i) => `<div class="split-seg" style="width:${(x.share * 100).toFixed(2)}%;background:${PLOT_COLORS[i % 6]}"
+            title="${esc(x.crop)}: ${x.ha} ha">${x.share >= 0.25 ? `${esc(x.crop)} · ${x.ha} ha` : x.share >= 0.1 ? esc(x.crop) : ""}</div>`).join("")}
+      </div>
+      <div class="split-legend">${p.plots.map((x, i) => `<span><i style="background:${PLOT_COLORS[i % 6]}"></i>${esc(x.crop)} ${x.ha} ha (${Math.round(x.share * 100)}%)</span>`).join("")}</div>
+
+      <div class="plan-total">
+        <div class="profit-head"><span class="detail-label">Expected farm profit</span>
+          <strong class="${t.typical >= 0 ? "pos" : "neg"}">${rupees(t.typical)}</strong></div>
+        <div class="range-bar">
+          <div class="range-fill" style="left:${pos(t.low)}%;width:${(pos(t.high) - pos(t.low)).toFixed(1)}%"></div>
+          ${lo < 0 ? `<div class="range-zero" style="left:${pos(0)}%"></div>` : ""}
+          <div class="range-mark" style="left:${pos(t.typical)}%"></div>
+        </div>
+        <div class="range-labels"><span>Bad year ${rupees(t.low)}</span><span>Good year ${rupees(t.high)}</span></div>
+        ${base ? `<p class="small">The best single crop on the whole farm (${esc(base.crop)}) would give ${rupees(base.typical)} in a typical year:
+            this plan is <strong class="${p.gain_vs_single_crop >= 0 ? "pos" : "neg"}">${p.gain_vs_single_crop >= 0 ? "+" : ""}${rupees(p.gain_vs_single_crop)}</strong>
+            and spreads the price risk across ${p.plots.length} crop${p.plots.length > 1 ? "s" : ""}.</p>` : ""}
+        <p class="muted small">Irrigated land used: ${irrigatedUsed} of ${p.irrigated_ha} ha.
+          Plot sizes in ${p.rules.step_ha} ha steps; each crop between ${Math.round(p.rules.min_share * 100)}% and ${Math.round(p.rules.max_share * 100)}% of the farm.</p>
+      </div>
+    </div>
+
+    <div class="plot-grid">
+      ${p.plots.map((x, i) => `
+        <div class="plot-card">
+          <div class="plot-head"><i style="background:${PLOT_COLORS[i % 6]}"></i>
+            <strong>Plot ${i + 1}: ${esc(x.crop)}</strong> <span class="muted">${esc(x.marathi)}</span></div>
+          <div class="plot-ha">${x.ha} ha <span class="muted small">· ${Math.round(x.share * 100)}% of farm · ${Math.round(x.suitability * 100)}% soil match</span></div>
+          <div class="tags">${x.needs_irrigation ? `<span class="tag warn">Irrigated</span>` : `<span class="tag ok">Rain-fed</span>`}<span class="tag">Water need: ${esc(x.water_need)}</span></div>
+          <div class="kv"><span>Typical profit</span><strong class="${x.profit.typical >= 0 ? "pos" : "neg"}">${rupees(x.profit.typical)}</strong></div>
+          <div class="kv"><span>Range</span><span>${rupees(x.profit.low)} to ${rupees(x.profit.high)}</span></div>
+          <div class="kv"><span>Fertilizer cost</span><span>${rupees(x.fertilizer_cost)}</span></div>
+          ${x.warning ? `<p class="small tl-warn">⚠ ${esc(x.warning)}</p>` : ""}
+          <details class="fert"><summary>Fertilizer schedule for this plot</summary>${scheduleTimeline(x.schedule)}</details>
+        </div>`).join("")}
+    </div>
+    ${p.excluded.length ? `<p class="muted small">Not planned: ${p.excluded.map(e => `${esc(e.crop)} (${esc(e.reason)})`).join(", ")}.</p>` : ""}`;
+  out.classList.remove("hidden");
+  out.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 function buildCropSelect() {
+  el("plan-fixed").innerHTML = `<option value="">No preference</option>` +
+    meta.crops.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join("");
   el("irr-crop").innerHTML = `<option value="">Not set (medium water need)</option>` +
     meta.crops.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join("");
 }

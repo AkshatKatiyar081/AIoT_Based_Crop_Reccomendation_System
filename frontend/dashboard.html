@@ -20,6 +20,7 @@
     <nav class="sidebar-nav">
       <a href="#farm-section"       class="nav-link active">Farm &amp; Soil</a>
       <a href="#recommend-section"  class="nav-link">Recommendation</a>
+      <a href="#plan-section"       class="nav-link">Farm plan</a>
       <a href="#irrigation-section" class="nav-link">Irrigation</a>
       <a href="#history-section"    class="nav-link">History</a>
     </nav>
@@ -137,7 +138,37 @@
       </div>
     </section>
 
-    <!-- ═══ 3. Smart Irrigation ═════════════════════════════════════════ -->
+    <!-- ═══ 3. Farm plan ═══════════════════════════════════════════════ -->
+    <section id="plan-section" class="dashboard-section">
+      <div class="section-header">
+        <h3 class="section-title">Farm Plan</h3>
+        <span class="section-badge">Splits your land across crops for the best expected profit</span>
+      </div>
+
+      <div class="recommend-panel">
+        <div class="recommend-intro">
+          <p>Tell us how big your farm is and how many plots you want. The planner picks crops that suit your
+          <strong>soil card above</strong>, are in season on your sowing date and fit your irrigated land, then shares the
+          land out for the <strong>highest expected profit</strong>, with no more than half the farm under one crop.</p>
+        </div>
+        <div class="plan-inputs">
+          <div class="field"><label for="plan-total">Total land (ha)</label><input type="number" id="plan-total" min="0.5" step="0.5" value="12" /></div>
+          <div class="field"><label for="plan-plots">Number of plots</label><input type="number" id="plan-plots" min="1" max="6" step="1" value="3" /></div>
+          <div class="field"><label for="plan-irrigated">Irrigated land (ha)</label><input type="number" id="plan-irrigated" min="0" step="0.5" value="6" /></div>
+          <div class="field"><label for="plan-fixed">Crop I must grow <span class="muted">(optional)</span></label><select id="plan-fixed"></select></div>
+          <div class="field"><label for="plan-fixed-ha">…on how many ha</label><input type="number" id="plan-fixed-ha" min="0.5" step="0.5" placeholder="e.g. 2" /></div>
+        </div>
+        <button class="btn-recommend" id="plan-btn" onclick="makePlan()">
+          <span class="btn-text">Plan my farm</span>
+          <span class="btn-spinner-lg hidden" id="plan-spinner"></span>
+        </button>
+        <div id="plan-error" class="error-msg hidden"></div>
+      </div>
+
+      <div id="plan-result" class="hidden"></div>
+    </section>
+
+    <!-- ═══ 4. Smart Irrigation ═════════════════════════════════════════ -->
     <section id="irrigation-section" class="dashboard-section">
       <div class="section-header">
         <h3 class="section-title">Smart Irrigation</h3>
@@ -188,7 +219,7 @@
       <div id="irr-error" class="error-msg hidden"></div>
     </section>
 
-    <!-- ═══ 4. History ══════════════════════════════════════════════════ -->
+    <!-- ═══ 5. History ══════════════════════════════════════════════════ -->
     <section id="history-section" class="dashboard-section">
       <div class="section-header">
         <h3 class="section-title">Crop History</h3>

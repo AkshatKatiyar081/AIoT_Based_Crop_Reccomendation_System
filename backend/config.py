@@ -47,3 +47,4 @@ GIPE_DIR = BASE_DIR / "data" / "gipe_maharashtra"
 DATA_GOV_IN_API_KEY = os.getenv("DATA_GOV_IN_API_KEY", "")
 MANDI_HISTORY_PATH = BASE_DIR / "data" / "processed" / "pune_mandi_prices.csv"
 PUNE_YIELDS_PATH = BASE_DIR / "data" / "processed" / "pune_crop_yields.csv"
+VEG_YIELDS_PATH = BASE_DIR / "data" / "processed" / "vegetable_yields.csv"

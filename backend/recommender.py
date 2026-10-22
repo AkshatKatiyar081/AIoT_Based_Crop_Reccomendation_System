@@ -190,7 +190,7 @@ def _cost_text(rupees: float) -> str:
 # ─── Main entry point ─────────────────────────────────────────────────────────
 
 def recommend(soil_raw: dict, area_ha: float, irrigation: bool, on_date: date | None = None,
-              taluka: str | None = None) -> dict:
+              taluka: str | None = None, top_now: int | None = TOP_NOW) -> dict:
     """`on_date` = the planned sowing/transplanting date (default today); seasons and
     fertilizer schedules are worked out from it."""
     if _bundle is None:
@@ -240,7 +240,7 @@ def recommend(soil_raw: dict, area_ha: float, irrigation: bool, on_date: date | 
     def rank_key(r):
         return (not r["water"]["feasible"], -r["suitability"])
 
-    now = sorted([r for r in results if r["season"]["status"] == "now"], key=rank_key)[:TOP_NOW]
+    now = sorted([r for r in results if r["season"]["status"] == "now"], key=rank_key)[:top_now]
     later = sorted([r for r in results if r["season"]["status"] == "later"], key=rank_key)[:TOP_LATER]
 
     return {

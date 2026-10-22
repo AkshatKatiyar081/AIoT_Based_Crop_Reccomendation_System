@@ -7,6 +7,7 @@ import database
 import district
 import market
 import mqtt_service
+import planner
 import recommender
 import weather
 from config import CROP_METRICS_PATH, FERTILIZER_METRICS_PATH
@@ -125,6 +126,30 @@ def recommend():
 
     result["taluka"] = _taluka(data.get("taluka"))
     result["area"] = area
+    return jsonify(result), 200
+
+
+@api_bp.route("/plan", methods=["POST"])
+def farm_plan():
+    """Split the farm into plots and choose a crop for each (expected-profit optimiser)."""
+    if not _require_auth():
+        return _unauthorised()
+    data = request.get_json() or {}
+    try:
+        total = float(data.get("total_ha"))
+        plots = int(data.get("plots"))
+        irrigated = float(data.get("irrigated_ha") or 0)
+        sow_date = date.fromisoformat(data["sowing_date"]) if data.get("sowing_date") else date.today()
+    except (TypeError, ValueError, KeyError):
+        return jsonify({"error": "Enter total land, number of plots and irrigated land as numbers."}), 400
+    fixed = data.get("fixed") or None
+    try:
+        soil = recommender.parse_soil_card(data.get("soil") or {})
+        result = planner.plan(soil, total, plots, irrigated, sow_date, _taluka(data.get("taluka")), fixed)
+    except (recommender.SoilCardError, planner.PlanError) as e:
+        return jsonify({"error": str(e)}), 400
+    except RuntimeError as e:
+        return jsonify({"error": str(e)}), 500
     return jsonify(result), 200
 
 

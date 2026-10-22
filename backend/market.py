@@ -26,7 +26,7 @@ from functools import lru_cache
 import pandas as pd
 
 import database
-from config import DATA_GOV_IN_API_KEY, MANDI_HISTORY_PATH, PUNE_YIELDS_PATH
+from config import DATA_GOV_IN_API_KEY, MANDI_HISTORY_PATH, PUNE_YIELDS_PATH, VEG_YIELDS_PATH
 from knowledge import CROPS
 
 LIVE_RESOURCE = "9ef84268-d588-465a-a308-a864a43d0070"
@@ -185,11 +185,20 @@ def harvest_price(crop: str, harvest_month: int) -> dict | None:
 
 @lru_cache(maxsize=1)
 def _yields() -> dict:
-    try:
-        y = pd.read_csv(PUNE_YIELDS_PATH)
+    out = {}
+    try:  # field crops: Pune district statistics
+        for r in pd.read_csv(PUNE_YIELDS_PATH).itertuples():
+            out[r.crop] = {"t_per_ha": float(r.yield_t_per_ha),
+                           "basis": f"Pune district average {r.years} (data.gov.in crop statistics)"}
     except FileNotFoundError:
-        return {}
-    return {r.crop: {"t_per_ha": float(r.yield_t_per_ha), "years": r.years} for r in y.itertuples()}
+        pass
+    try:  # vegetables: national horticulture statistics
+        for r in pd.read_csv(VEG_YIELDS_PATH).itertuples():
+            out[r.crop] = {"t_per_ha": float(r.yield_t_per_ha),
+                           "basis": f"{r.area_basis} average {r.years} (NHB Horticultural Statistics at a Glance 2018)"}
+    except FileNotFoundError:
+        pass
+    return out
 
 
 def crop_yield(crop: str, commodity: str | None) -> dict | None:
@@ -197,7 +206,7 @@ def crop_yield(crop: str, commodity: str | None) -> dict | None:
     if not y:
         return None
     t = y["t_per_ha"]
-    note = f"Pune district average {y['years']} (data.gov.in crop statistics)"
+    note = y["basis"]
     if crop == "Rice" and commodity and commodity.startswith("Paddy"):
         t = round(t / PADDY_TO_RICE, 2)
         note += "; converted from milled rice to paddy"

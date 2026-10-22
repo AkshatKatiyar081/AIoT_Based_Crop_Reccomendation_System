@@ -487,6 +487,20 @@ body { font-family: var(--font); background: var(--bg-dark); color: var(--text-p
 .pill { font-size: 0.8rem; padding: 4px 10px; border-radius: 999px; background: var(--bg-input); border: 1px solid var(--border-line); }
 .tl-warn { color: #b45309; }
 .tasks-panel { margin-top: 16px; }
+.plan-inputs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; width: 100%; }
+#plan-result { margin-top: 24px; }
+.plan-summary { margin-bottom: 16px; }
+.split-bar { display: flex; height: 40px; border-radius: var(--radius-card); overflow: hidden; margin: 10px 0; }
+.split-seg { display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.85rem; font-weight: 600; white-space: nowrap; overflow: hidden; border-right: 2px solid var(--bg-card); }
+.split-seg:last-child { border-right: none; }
+.split-legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 0.85rem; color: var(--text-secondary); }
+.split-legend i, .plot-head i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; }
+.plan-total strong { white-space: nowrap; }
+.plan-total { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-line); display: flex; flex-direction: column; gap: 6px; }
+.plot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.plot-card { padding: 20px; background: var(--bg-card); border: 1px solid var(--border-line); border-radius: var(--radius-card); display: flex; flex-direction: column; gap: 8px; }
+.plot-head { font-size: 1rem; }
+.plot-ha { font-size: 1.4rem; font-weight: 600; }
 .econ { margin: 0 0 20px; padding: 16px; border-radius: var(--radius-card); background: var(--bg-panel); border: 1px solid var(--border-line); }
 .econ-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-bottom: 14px; }
 .econ-grid .detail-label { margin-bottom: 4px; }
@@ -527,6 +541,7 @@ body { font-family: var(--font); background: var(--bg-dark); color: var(--text-p
 
 @media (max-width: 1100px) {
   .info-grid, .farm-setup, .irrigation-controls { grid-template-columns: 1fr; }
+  .plan-inputs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 /* SCROLLBAR */
@@ -561,4 +576,5 @@ body { font-family: var(--font); background: var(--bg-dark); color: var(--text-p
   .soil-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .tl-step, .task { grid-template-columns: 1fr; gap: 4px; }
   .econ-grid { grid-template-columns: 1fr; }
+  .plan-inputs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
