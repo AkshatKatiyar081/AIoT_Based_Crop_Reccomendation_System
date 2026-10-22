@@ -40,7 +40,7 @@ def create_tables():
     """)
 
     # Schema Migrations
-    for column in ("planting_cost_per_hectare", "total_cost", "taluka", "soil_snapshot"):
+    for column in ("planting_cost_per_hectare", "total_cost", "taluka", "soil_snapshot", "sowing_date", "schedule"):
         try:
             cursor.execute(f"ALTER TABLE crop_history ADD COLUMN {column} TEXT DEFAULT ''")
         except sqlite3.OperationalError:
@@ -97,15 +97,15 @@ def get_crop_history(user_id: int):
 def add_crop_history(user_id: int, crop_name: str, reason: str = "",
                      harvest_duration: str = "", planting_month: str = "",
                      harvest_month: str = "", planting_cost: str = "", total_cost: str = "",
-                     taluka: str = "", soil_snapshot: str = ""):
+                     taluka: str = "", soil_snapshot: str = "", sowing_date: str = "", schedule: str = ""):
     conn = get_db()
     conn.execute(
         """INSERT INTO crop_history
            (user_id, crop_name, reason, harvest_duration, planting_month, harvest_month,
-            planting_cost_per_hectare, total_cost, taluka, soil_snapshot)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            planting_cost_per_hectare, total_cost, taluka, soil_snapshot, sowing_date, schedule)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
         (user_id, crop_name, reason, harvest_duration, planting_month, harvest_month,
-         planting_cost, total_cost, taluka, soil_snapshot),
+         planting_cost, total_cost, taluka, soil_snapshot, sowing_date, schedule),
     )
     conn.commit()
     entry_id = conn.execute("SELECT last_insert_rowid()").fetchone()[0]

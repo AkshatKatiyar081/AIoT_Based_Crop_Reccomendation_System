@@ -10,7 +10,11 @@ Three parts:
    (Very Low +50%, Low +25%, Medium 100%, High -25%, Very High -50%), then
    converted into a DAP-based and an SSP-based product set.
 3. Organic advice: a rule summarising what the soil cards advise.
+4. Application schedule: the season's dose split into dated steps (basal +
+   top dressings) from each crop's sourced split schedule, with rain warnings.
 """
+
+from datetime import date, timedelta
 
 from joblib import load
 
@@ -46,6 +50,9 @@ MICRO_NAMES = {"Zn": "Zinc", "S": "Sulphur", "B": "Boron", "Fe": "Iron", "Mn": "
 ORGANIC_DOSE = {  # organic carbon level -> (FYM t/ha, vermicompost t/ha)
     "VL": (10, 2.5), "L": (10, 2.5), "M": (7.5, 2.0), "H": (5, 1.5), "VH": (5, 1.5),
 }
+
+RAIN_WARN_MM = 10.0   # forecast rain (next 2 days) that would wash urea away
+DUE_SOON_DAYS = 3     # a step this close is "due"
 
 try:
     _bundle = load(FERTILIZER_MODEL_PATH)
@@ -108,9 +115,90 @@ def organic_advice(soil: dict) -> dict:
     }
 
 
+# ─── 4. Application schedule ──────────────────────────────────────────────────
+
+def _product(name: str, per_ha: float, area_ha: float) -> dict | None:
+    per_ha = int(round(per_ha))
+    if per_ha <= 0:
+        return None
+    total = per_ha * area_ha
+    return {"product": name, "kg_per_ha": per_ha, "total_kg": round(total, 1),
+            "bags": round(total / BAG_KG[name], 1), "bag_kg": BAG_KG[name]}
+
+
+def _rain_next_two_days(weather: dict | None) -> float:
+    if not weather or not weather.get("forecast"):
+        return 0.0
+    return round(sum((d.get("rain_mm") or 0) for d in weather["forecast"][:2]), 1)
+
+
+def application_schedule(crop: str, need: dict, option: str, area_ha: float, start: date,
+                         weather: dict | None = None, irrigation: bool = False,
+                         today: date | None = None) -> dict:
+    """
+    Split the season's N, P2O5 and K2O need into dated steps.
+    `option` is "dap" (DAP + urea + MOP) or "ssp" (SSP + urea + MOP).
+    """
+    sched = CROPS[crop]["schedule"]
+    today = today or date.today()
+    rain = _rain_next_two_days(weather)
+    n_credit = 0.0   # N already supplied by DAP beyond a split's own share
+    steps = []
+
+    for sp in sched["splits"]:
+        n, p, k = need["N"] * sp["N"], need["P2O5"] * sp["P"], need["K2O"] * sp["K"]
+        products = []
+        if p > 0:
+            if option == "dap":
+                dap = p / DAP_P2O5
+                products.append(_product("DAP", dap, area_ha))
+                n -= dap * DAP_N
+            else:
+                products.append(_product("SSP", p / SSP_P2O5, area_ha))
+        if n < 0:                      # DAP brought more N than this split needs
+            n_credit += -n
+            n = 0.0
+        elif n_credit:
+            used = min(n, n_credit)
+            n, n_credit = n - used, n_credit - used
+        if n > 0:
+            products.append(_product("Urea", n / UREA_N, area_ha))
+        if k > 0:
+            products.append(_product("MOP", k / MOP_K2O, area_ha))
+        products = [x for x in products if x]
+
+        when = start + timedelta(days=sp["day"])
+        days_left = (when - today).days
+        status = "done" if days_left < 0 else ("due" if days_left <= DUE_SOON_DAYS else "upcoming")
+
+        tips = []
+        has_urea = any(x["product"] == "Urea" for x in products)
+        if has_urea and status == "due" and rain >= RAIN_WARN_MM:
+            tips.append(f"{rain:g} mm rain is forecast in the next 2 days: wait until it passes, "
+                        "or the urea will wash away.")
+        if has_urea and sp["day"] > 0:
+            tips.append("Spread urea on moist soil, not standing water"
+                        + (", then give a light irrigation." if irrigation else ", ideally just before expected light rain."))
+
+        steps.append({
+            "day": sp["day"], "date": when.isoformat(), "days_left": days_left, "status": status,
+            "stage": sp["stage"],
+            "nutrients_kg_per_ha": {"N": round(need["N"] * sp["N"]), "P2O5": round(p), "K2O": round(k)},
+            "products": products, "tips": tips,
+        })
+
+    return {
+        "reference": sched["reference"], "start_date": start.isoformat(), "option": option,
+        "option_label": "DAP + Urea + MOP" if option == "dap" else "SSP + Urea + MOP",
+        "status": sched["status"], "sources": sched["sources"], "note": sched.get("note"),
+        "rain_next_2_days_mm": rain, "steps": steps,
+    }
+
+
 # ─── Main entry point ─────────────────────────────────────────────────────────
 
-def advise(crop: str, soil: dict, area_ha: float) -> dict:
+def advise(crop: str, soil: dict, area_ha: float, start: date | None = None,
+           weather: dict | None = None, irrigation: bool = False) -> dict:
     rdf = CROPS[crop]["rdf"]
     levels = {n: rate(n, soil[n]) for n in ("N", "P", "K")}
 
@@ -141,9 +229,6 @@ def advise(crop: str, soil: dict, area_ha: float) -> dict:
     if need_k > 0 and combinations and all(c["code"] in NO_POTASH_CODES for c in combinations):
         notes.append("The Soil Health Card combinations predicted for this soil contain no potash, so the MOP "
                      "above can likely be skipped. Follow your own card if it says otherwise.")
-    if need_n > 0:
-        notes.append("Apply all phosphorus and potash fertilizer and half the urea at sowing; "
-                     "give the remaining urea 30–45 days later.")
     if crop in LEGUMES:
         notes.append("Pulse/oilseed legume: treat seed with Rhizobium + PSB culture; it fixes part of its own nitrogen.")
     if soil["pH"] <= 5.5:
@@ -157,8 +242,13 @@ def advise(crop: str, soil: dict, area_ha: float) -> dict:
             micro.append({"nutrient": MICRO_NAMES[nut], "product": product,
                           "kg_per_ha": kg, "total_kg": round(kg * area_ha, 1)})
 
+    need = {"N": need_n, "P2O5": need_p, "K2O": need_k}
+    schedule = application_schedule(crop, need, dose_options[0]["id"], area_ha, start or date.today(),
+                                     weather=weather, irrigation=irrigation)
+
     return {
         "crop": crop,
+        "schedule": schedule,
         "soil_status": {
             "N": LEVEL_NAMES[levels["N"]], "P": LEVEL_NAMES[levels["P"]], "K": LEVEL_NAMES[levels["K"]],
             "OC": LEVEL_NAMES[rate("OC", soil["OC"])], "pH": ph_class(soil["pH"]),

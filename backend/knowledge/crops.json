@@ -10,7 +10,8 @@
       "water_mm": "Seasonal crop water requirement in mm, [min, max]",
       "rdf": "Recommended dose of fertilizer, kg/ha of N, P2O5, K2O, for medium-fertility soil",
       "cost_per_ha_inr": "Approximate cost of cultivation per hectare in rupees, [min, max]",
-      "verification": "Per-crop status of rdf / sowing / cost: verified = matches an official Maharashtra source; partial = trial or neighbouring-region source; general = standard value, not checked against a Pune source; cross-checked = consistent with government cost data; estimate / unverified = no source found."
+      "verification": "Per-crop status of rdf / sowing / cost: verified = matches an official Maharashtra source; partial = trial or neighbouring-region source; general = standard value, not checked against a Pune source; cross-checked = consistent with government cost data; estimate / unverified = no source found.",
+      "schedule": "Fertilizer split schedule: share of the season's N, P and K applied at each split, 'day' counted from the reference event (sowing, transplanting or planting). status: verified = official Maharashtra/national source; partial = shares or timing from a source, the rest general practice; general = standard practice, no source found."
     }
   },
   "water_classes": {
@@ -63,6 +64,34 @@
         "sources": [
           "MPKV Rahuri, Paddy research recommendations (mpkv.ac.in/Uploads/Research/1. Paddy_20200110043402.pdf)"
         ]
+      },
+      "schedule": {
+        "reference": "transplanting",
+        "status": "general",
+        "splits": [
+          {
+            "day": 0,
+            "stage": "Basal, at transplanting",
+            "N": 0.5,
+            "P": 1.0,
+            "K": 1.0
+          },
+          {
+            "day": 30,
+            "stage": "Active tillering, about 30 days",
+            "N": 0.25,
+            "P": 0.0,
+            "K": 0.0
+          },
+          {
+            "day": 55,
+            "stage": "Panicle initiation, about 55 days",
+            "N": 0.25,
+            "P": 0.0,
+            "K": 0.0
+          }
+        ],
+        "sources": []
       }
     },
     "Grams": {
@@ -101,6 +130,23 @@
           "ICAR Rabi season agro-advisory for Maharashtra (vikaspedia.in)"
         ],
         "note": "ICAR Maharashtra advisory gives 25:50:25 basal; earlier value 25:50:0 corrected."
+      },
+      "schedule": {
+        "reference": "sowing",
+        "status": "verified",
+        "splits": [
+          {
+            "day": 0,
+            "stage": "Basal, at sowing",
+            "N": 1.0,
+            "P": 1.0,
+            "K": 1.0
+          }
+        ],
+        "sources": [
+          "ICAR Rabi season agro-advisory for Maharashtra (vikaspedia.in)"
+        ],
+        "note": "Pulse crop: the whole dose goes in at sowing; treat seed with Rhizobium."
       }
     },
     "Sugarcane": {
@@ -146,6 +192,44 @@
           "DES cost of cultivation, Sugarcane, Maharashtra: operating about Rs 1.32 lakh/ha (2019) + fixed Rs 68,425/ha (2021) (ceicdata.com)"
         ],
         "note": "250:115:115 is MPKV's dose for suru/ratoon and most varieties; preseasonal cane is 340:170:170 and Co-86032 is 300:140:140."
+      },
+      "schedule": {
+        "reference": "planting",
+        "status": "partial",
+        "splits": [
+          {
+            "day": 0,
+            "stage": "Basal, at planting",
+            "N": 0.1,
+            "P": 1.0,
+            "K": 1.0
+          },
+          {
+            "day": 45,
+            "stage": "45 days after planting",
+            "N": 0.4,
+            "P": 0.0,
+            "K": 0.0
+          },
+          {
+            "day": 90,
+            "stage": "90 days after planting",
+            "N": 0.1,
+            "P": 0.0,
+            "K": 0.0
+          },
+          {
+            "day": 120,
+            "stage": "120 days after planting, at earthing up",
+            "N": 0.4,
+            "P": 0.0,
+            "K": 0.0
+          }
+        ],
+        "sources": [
+          "MPKV Rahuri, Research Recommendations 2024: sugarcane N split at planting, 45, 90 and 120 days after planting; P and K at planting (mpkv.ac.in)"
+        ],
+        "note": "Split days are from MPKV; the share of nitrogen in each split is general practice."
       }
     },
     "Maize": {
@@ -186,6 +270,37 @@
         "sources": [
           "MPKV Rahuri, Maize research recommendations (mpkv.ac.in/Uploads/Research/5. Maize_20200110053602.pdf)"
         ]
+      },
+      "schedule": {
+        "reference": "sowing",
+        "status": "partial",
+        "splits": [
+          {
+            "day": 0,
+            "stage": "Basal, at sowing",
+            "N": 0.3333333333333333,
+            "P": 1.0,
+            "K": 1.0
+          },
+          {
+            "day": 30,
+            "stage": "Knee-high stage, about 30 days",
+            "N": 0.3333333333333333,
+            "P": 0.0,
+            "K": 0.0
+          },
+          {
+            "day": 50,
+            "stage": "Tasseling, about 50 days",
+            "N": 0.3333333333333333,
+            "P": 0.0,
+            "K": 0.0
+          }
+        ],
+        "sources": [
+          "AICRP Maize, Maharashtra: nitrogen in three equal splits (aicrpmaize.icar.gov.in/maharashtra)"
+        ],
+        "note": "Three equal nitrogen splits are from AICRP; the exact days are general practice."
       }
     },
     "Onion": {
@@ -231,6 +346,37 @@
           "MPKV Rahuri, Vegetable research recommendations (mpkv.ac.in/Uploads/Research/12. Vegetable_20200110053854.pdf)"
         ],
         "note": "Plus 30-45 kg/ha sulphur depending on soil S. Earlier value 100:50:50 corrected."
+      },
+      "schedule": {
+        "reference": "transplanting",
+        "status": "verified",
+        "splits": [
+          {
+            "day": 0,
+            "stage": "Basal, at transplanting",
+            "N": 0.5,
+            "P": 1.0,
+            "K": 1.0
+          },
+          {
+            "day": 30,
+            "stage": "30 days after transplanting",
+            "N": 0.25,
+            "P": 0.0,
+            "K": 0.0
+          },
+          {
+            "day": 45,
+            "stage": "45 days after transplanting, before bulbing",
+            "N": 0.25,
+            "P": 0.0,
+            "K": 0.0
+          }
+        ],
+        "sources": [
+          "National Horticulture Board, onion manuring: top dressing in two doses at 30 and 45 days after transplanting, before bulbing (nhb.gov.in/pdf/vegetable/onion/oni007.pdf)"
+        ],
+        "note": "Finish all nitrogen before bulbing starts."
       }
     },
     "Jowar": {
@@ -272,6 +418,29 @@
           "MPKV Rahuri, Sorghum research recommendations (mpkv.ac.in/Uploads/Research/3. Sorghum_20200110053526.pdf)"
         ],
         "note": "80:40:40 + 5 t FYM is MPKV's general dose for rabi sorghum in Western Maharashtra; rainfed medium-deep soils use about 50:25:0."
+      },
+      "schedule": {
+        "reference": "sowing",
+        "status": "verified",
+        "splits": [
+          {
+            "day": 0,
+            "stage": "Basal, at sowing",
+            "N": 0.5,
+            "P": 1.0,
+            "K": 1.0
+          },
+          {
+            "day": 30,
+            "stage": "30 days after sowing",
+            "N": 0.5,
+            "P": 0.0,
+            "K": 0.0
+          }
+        ],
+        "sources": [
+          "MPKV Rahuri, Sorghum research recommendations (mpkv.ac.in/Uploads/Research/3. Sorghum_20200110053526.pdf)"
+        ]
       }
     },
     "Bajra": {
@@ -314,6 +483,29 @@
           "MPKV Rahuri, Pearl millet research recommendations (mpkv.ac.in/Uploads/Research/2. Pearlmillet_20200110053501.pdf)"
         ],
         "note": "50:25:25 from a Western Maharashtra on-farm study; MPKV's Dhule-region recommendation is 60:30:30."
+      },
+      "schedule": {
+        "reference": "sowing",
+        "status": "partial",
+        "splits": [
+          {
+            "day": 0,
+            "stage": "Basal, at sowing",
+            "N": 0.5,
+            "P": 1.0,
+            "K": 1.0
+          },
+          {
+            "day": 25,
+            "stage": "Tillering, about 25 days",
+            "N": 0.5,
+            "P": 0.0,
+            "K": 0.0
+          }
+        ],
+        "sources": [
+          "Pearl millet nitrogen scheduling trial, Aurangabad, Maharashtra (phytojournal.com 2019): half basal + half at tillering (25 DAS)"
+        ]
       }
     },
     "Wheat": {
@@ -354,6 +546,29 @@
           "DES cost of cultivation, Wheat, Maharashtra: total about Rs 60,000/ha in 2020 (ceicdata.com)"
         ],
         "note": "Timely sowing 16 Nov - 1 Dec; late sowing up to about 23 Dec at 90:60:40."
+      },
+      "schedule": {
+        "reference": "sowing",
+        "status": "verified",
+        "splits": [
+          {
+            "day": 0,
+            "stage": "Basal, at sowing",
+            "N": 0.5,
+            "P": 1.0,
+            "K": 1.0
+          },
+          {
+            "day": 21,
+            "stage": "Crown root initiation, with first irrigation",
+            "N": 0.5,
+            "P": 0.0,
+            "K": 0.0
+          }
+        ],
+        "sources": [
+          "ICAR Rabi season agro-advisory for Maharashtra (vikaspedia.in)"
+        ]
       }
     },
     "Groundnut": {
@@ -396,6 +611,21 @@
           "MPKV Rahuri, AICRP on Groundnut (mpkv.ac.in/Uploads/Research/2. AICRP on Groundnut_20250822044155.pdf)"
         ],
         "note": "Some Maharashtra trials use 25:50:30 instead of 25:50:0."
+      },
+      "schedule": {
+        "reference": "sowing",
+        "status": "general",
+        "splits": [
+          {
+            "day": 0,
+            "stage": "Basal, at sowing",
+            "N": 1.0,
+            "P": 1.0,
+            "K": 1.0
+          }
+        ],
+        "sources": [],
+        "note": "Legume: whole dose at sowing; gypsum at flowering helps pod filling."
       }
     },
     "Soybean": {
@@ -435,6 +665,21 @@
           "Dr. PDKV Akola, Research Recommendations 2023 (pdkv.ac.in/Circulars/Recom-2023English.pdf)"
         ],
         "note": "MPKV also recommends 20 kg/ha bentonite sulphur on S-deficient soils."
+      },
+      "schedule": {
+        "reference": "sowing",
+        "status": "general",
+        "splits": [
+          {
+            "day": 0,
+            "stage": "Basal, at sowing",
+            "N": 1.0,
+            "P": 1.0,
+            "K": 1.0
+          }
+        ],
+        "sources": [],
+        "note": "Legume: whole dose at sowing; treat seed with Rhizobium."
       }
     },
     "Cucumber": {
@@ -475,6 +720,27 @@
         "cost": "estimate",
         "sources": [],
         "note": "No Maharashtra recommendation found online; an old MPKV trial used 200:50:100 for variety Himangi."
+      },
+      "schedule": {
+        "reference": "sowing",
+        "status": "general",
+        "splits": [
+          {
+            "day": 0,
+            "stage": "Basal, at sowing",
+            "N": 0.5,
+            "P": 1.0,
+            "K": 1.0
+          },
+          {
+            "day": 30,
+            "stage": "30 days after sowing, vine growth",
+            "N": 0.5,
+            "P": 0.0,
+            "K": 0.0
+          }
+        ],
+        "sources": []
       }
     },
     "Ragi": {
@@ -513,6 +779,29 @@
           "Dr. BSKKV Dapoli study citing finger millet RDF 80:40:0 (epubs.icar.org.in, JISCAR)"
         ],
         "note": "Konkan university (Dapoli) recommendation; earlier value 60:30:30 corrected."
+      },
+      "schedule": {
+        "reference": "transplanting",
+        "status": "verified",
+        "splits": [
+          {
+            "day": 0,
+            "stage": "Basal, at transplanting",
+            "N": 0.5,
+            "P": 1.0,
+            "K": 1.0
+          },
+          {
+            "day": 30,
+            "stage": "30 days after transplanting",
+            "N": 0.5,
+            "P": 0.0,
+            "K": 0.0
+          }
+        ],
+        "sources": [
+          "Dr. BSKKV Dapoli finger millet study: half N and full P at sowing/transplanting, remaining N at 30 DAS/DAT (epubs.icar.org.in, JISCAR)"
+        ]
       }
     },
     "Spinach": {
@@ -554,6 +843,27 @@
         "cost": "estimate",
         "sources": [],
         "note": "No Maharashtra recommendation found online."
+      },
+      "schedule": {
+        "reference": "sowing",
+        "status": "general",
+        "splits": [
+          {
+            "day": 0,
+            "stage": "Basal, at sowing",
+            "N": 0.5,
+            "P": 1.0,
+            "K": 1.0
+          },
+          {
+            "day": 25,
+            "stage": "After the first cutting, about 25 days",
+            "N": 0.5,
+            "P": 0.0,
+            "K": 0.0
+          }
+        ],
+        "sources": []
       }
     },
     "Cabbage": {
@@ -597,6 +907,34 @@
           "MPKV Rahuri, Vegetable research recommendations (mpkv.ac.in/Uploads/Research/12. Vegetable_20200110053854.pdf)"
         ],
         "note": "Konkan university dose; MPKV gives only a yield-target equation for rabi cabbage. Earlier value 150:75:75 corrected."
+      },
+      "schedule": {
+        "reference": "transplanting",
+        "status": "general",
+        "splits": [
+          {
+            "day": 0,
+            "stage": "Basal, at transplanting",
+            "N": 0.5,
+            "P": 1.0,
+            "K": 1.0
+          },
+          {
+            "day": 30,
+            "stage": "30 days after transplanting",
+            "N": 0.25,
+            "P": 0.0,
+            "K": 0.0
+          },
+          {
+            "day": 45,
+            "stage": "45 days after transplanting, head formation",
+            "N": 0.25,
+            "P": 0.0,
+            "K": 0.0
+          }
+        ],
+        "sources": []
       }
     },
     "Indian Beans": {
@@ -638,6 +976,21 @@
           "Hyacinth bean basal dose for bush types, N 25 + P 50 kg/ha (secondary course material, agridots.com)"
         ],
         "note": "Only a secondary source found."
+      },
+      "schedule": {
+        "reference": "sowing",
+        "status": "general",
+        "splits": [
+          {
+            "day": 0,
+            "stage": "Basal, at sowing",
+            "N": 1.0,
+            "P": 1.0,
+            "K": 1.0
+          }
+        ],
+        "sources": [],
+        "note": "Legume: whole dose at sowing."
       }
     },
     "Methi": {
@@ -680,6 +1033,21 @@
           "ICAR Ajmer fenugreek trial, fertilizer level 40:40:20 (phytojournal.com 2018)"
         ],
         "note": "Trial fertilizer level, not an official package of practices."
+      },
+      "schedule": {
+        "reference": "sowing",
+        "status": "general",
+        "splits": [
+          {
+            "day": 0,
+            "stage": "Basal, at sowing",
+            "N": 1.0,
+            "P": 1.0,
+            "K": 1.0
+          }
+        ],
+        "sources": [],
+        "note": "Short leafy crop: whole dose at sowing."
       }
     },
     "Brinjal": {
@@ -724,6 +1092,34 @@
           "MPKV Rahuri, Vegetable research recommendations (mpkv.ac.in/Uploads/Research/12. Vegetable_20200110053854.pdf)"
         ],
         "note": "MPKV recommended dose (given with a drip fertigation schedule); earlier value 100:50:50 corrected."
+      },
+      "schedule": {
+        "reference": "transplanting",
+        "status": "general",
+        "splits": [
+          {
+            "day": 0,
+            "stage": "Basal, at transplanting",
+            "N": 0.5,
+            "P": 1.0,
+            "K": 1.0
+          },
+          {
+            "day": 30,
+            "stage": "30 days after transplanting",
+            "N": 0.25,
+            "P": 0.0,
+            "K": 0.0
+          },
+          {
+            "day": 60,
+            "stage": "60 days after transplanting, fruiting",
+            "N": 0.25,
+            "P": 0.0,
+            "K": 0.0
+          }
+        ],
+        "sources": []
       }
     }
   }

@@ -61,7 +61,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   loadDistrictProfile();
   onTalukaChange();
+  el("sowing-date").value = isoToday();
   loadHistory();
+  loadTasks();
 
   fetchSensorData();
   sensorInterval = setInterval(fetchSensorData, 1500);
@@ -230,6 +232,7 @@ async function getRecommendation() {
         taluka: el("taluka").value,
         area: el("area").value,
         irrigation: el("irrigation").checked,
+        sowing_date: el("sowing-date").value,
         soil: readSoilForm(),
       }),
     });
@@ -355,9 +358,10 @@ function fertilizerPlan(f) {
 
   return `
     ${combos}
-    <p class="muted small">Doses: standard ${f.standard_dose_kg_per_ha.N}:${f.standard_dose_kg_per_ha.P2O5}:${f.standard_dose_kg_per_ha.K2O} kg/ha (N:P₂O₅:K₂O),
+    ${scheduleTimeline(f.schedule)}
+    <p class="muted small">Season totals: standard ${f.standard_dose_kg_per_ha.N}:${f.standard_dose_kg_per_ha.P2O5}:${f.standard_dose_kg_per_ha.K2O} kg/ha (N:P₂O₅:K₂O),
       adjusted for your soil (N ${esc(f.soil_status.N)}, P ${esc(f.soil_status.P)}, K ${esc(f.soil_status.K)})
-      → ${f.nutrient_need_kg_per_ha.N}:${f.nutrient_need_kg_per_ha.P2O5}:${f.nutrient_need_kg_per_ha.K2O} kg/ha. Two ways to supply it:</p>
+      → ${f.nutrient_need_kg_per_ha.N}:${f.nutrient_need_kg_per_ha.P2O5}:${f.nutrient_need_kg_per_ha.K2O} kg/ha for the whole season. Two ways to supply it:</p>
     <div class="dose-grid">${f.dose_options.map(doseTable).join("")}</div>
     ${micro}
     <div class="fert-block">
@@ -365,6 +369,55 @@ function fertilizerPlan(f) {
       <p class="small">${esc(f.organic.text)}</p>
     </div>
     ${f.notes.length ? `<ul class="notes">${f.notes.map(n => `<li>${esc(n)}</li>`).join("")}</ul>` : ""}`;
+}
+
+const STEP_STATUS = { done: "Done", due: "Due now", upcoming: "Upcoming" };
+const REF_WORD = { sowing: "sowing", transplanting: "transplanting", planting: "planting" };
+
+function scheduleTimeline(sch) {
+  if (!sch || !sch.steps) return "";
+  const basis = { verified: "official recommendation", partial: "partly from an official source", general: "standard practice" }[sch.status] || sch.status;
+  return `
+    <div class="fert-block">
+      <div class="detail-label">When to apply <span class="muted">(${esc(sch.option_label)} · ${esc(basis)})</span></div>
+      <ol class="timeline">
+        ${sch.steps.map(st => `
+          <li class="tl-step tl-${st.status}">
+            <div class="tl-when">
+              <strong>${formatDay(st.date)}</strong>
+              <span class="muted small">Day ${st.day} after ${esc(REF_WORD[sch.reference] || sch.reference)}</span>
+              <span class="tl-status">${STEP_STATUS[st.status] || ""}</span>
+            </div>
+            <div class="tl-what">
+              <div class="tl-stage">${esc(st.stage)}</div>
+              <div class="tl-products">${st.products.map(p => `<span class="pill">${esc(p.product)} <strong>${p.kg_per_ha} kg/ha</strong> · ${p.total_kg} kg · ${p.bags} bags</span>`).join("")}</div>
+              ${st.tips.map(t => `<div class="small ${t.includes("rain") ? "tl-warn" : "muted"}">${t.includes("rain") ? "⚠ " : ""}${esc(t)}</div>`).join("")}
+            </div>
+          </li>`).join("")}
+      </ol>
+      ${sch.note ? `<p class="muted small">${esc(sch.note)}</p>` : ""}
+      ${sch.sources.length ? `<p class="muted small" title="${esc(sch.sources.join(" | "))}">Source: ${esc(sch.sources[0].split(" (")[0])}</p>` : ""}
+    </div>`;
+}
+
+async function loadTasks() {
+  try {
+    const tasks = await api("/api/tasks/upcoming");
+    el("tasks-panel").classList.toggle("hidden", !tasks.length);
+    el("tasks-list").innerHTML = tasks.map(t => `
+      <div class="task ${t.days_left <= 3 ? "task-soon" : ""}">
+        <div class="task-when"><strong>${formatDay(t.date)}</strong>
+          <span class="muted small">${t.days_left < 0 ? `${-t.days_left} days overdue` : t.days_left === 0 ? "today" : `in ${t.days_left} days`}</span></div>
+        <div class="task-what"><strong>${esc(t.crop)}</strong> · ${esc(t.stage)}
+          <div class="small">${t.products.map(p => `${esc(p.product)} ${p.total_kg} kg (${p.bags} bags)`).join(", ")}</div>
+          ${t.warning ? `<div class="small tl-warn">⚠ ${esc(t.warning)}</div>` : ""}</div>
+      </div>`).join("");
+  } catch { /* tasks are optional */ }
+}
+
+function isoToday() {
+  const d = new Date();
+  return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
 }
 
 function selectCard(radio) {
@@ -392,11 +445,14 @@ async function saveRecommendation() {
         total_cost: crop.total_cost,
         taluka: lastResult.taluka,
         soil: lastResult.soil,
+        sowing_date: crop.fertilizer.schedule.start_date,
+        schedule: crop.fertilizer.schedule,
       }),
     });
     btn.textContent = `Saved — irrigation now set for ${crop.crop}`;
     el("irr-crop").value = crop.crop;
     loadHistory();
+    loadTasks();
   } catch (err) {
     btn.textContent = err.message;
   } finally {
@@ -484,7 +540,7 @@ function renderHistory(rows) {
       <td><span class="crop-chip">${esc(r.crop_name)}</span></td>
       <td>${esc(r.taluka || "—")}</td>
       <td>${esc(r.harvest_duration || "—")}</td>
-      <td>${esc(r.planting_month || "—")}</td>
+      <td>${r.sowing_date ? formatDay(r.sowing_date) : esc(r.planting_month || "—")}</td>
       <td>${esc(r.planting_cost_per_hectare || "—")}</td>
       <td style="font-weight: 600;">${esc(r.total_cost || "—")}</td>
       <td>${formatDate(r.date_recorded)}</td>

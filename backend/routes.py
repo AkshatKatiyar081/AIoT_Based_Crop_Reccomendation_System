@@ -1,4 +1,5 @@
 import json
+from datetime import date, timedelta
 
 from flask import Blueprint, request, jsonify, session
 
@@ -104,8 +105,16 @@ def recommend():
         return jsonify({"error": "Area must be greater than 0."}), 400
 
     try:
+        sow_date = date.fromisoformat(data["sowing_date"]) if data.get("sowing_date") else date.today()
+    except ValueError:
+        return jsonify({"error": "Sowing date must be a valid date."}), 400
+    if not date.today() - timedelta(days=60) <= sow_date <= date.today() + timedelta(days=366):
+        return jsonify({"error": "Sowing date must be within the last 60 days or the next 12 months."}), 400
+
+    try:
         result = recommender.recommend(
             data.get("soil") or {}, area_ha=area, irrigation=bool(data.get("irrigation")),
+            on_date=sow_date, taluka=_taluka(data.get("taluka")),
         )
     except recommender.SoilCardError as e:
         return jsonify({"error": str(e)}), 400
@@ -139,6 +148,8 @@ def save_recommendation():
         total_cost=data.get("total_cost", ""),
         taluka=data.get("taluka", ""),
         soil_snapshot=json.dumps(data.get("soil") or {}),
+        sowing_date=data.get("sowing_date", ""),
+        schedule=json.dumps(data.get("schedule") or {}),
     )
     # The saved crop becomes the irrigation target
     controller.set_crop(crop_name, _taluka(data.get("taluka")))
@@ -172,6 +183,39 @@ def irrigation_config():
         return jsonify({"error": str(e)}), 400
     mqtt_service.publish_pump(controller.pump_on)
     return jsonify(controller.state()), 200
+
+
+# ─── Upcoming fertilizer tasks ────────────────────────────────────────────────
+
+@api_bp.route("/tasks/upcoming", methods=["GET"])
+def upcoming_tasks():
+    """Next fertilizer steps across the crops the farmer has saved."""
+    user = _require_auth()
+    if not user:
+        return _unauthorised()
+    today = date.today()
+    tasks = []
+    for row in database.get_crop_history(user["id"]):
+        try:
+            sched = json.loads(row.get("schedule") or "{}")
+        except ValueError:
+            continue
+        rain = None
+        for step in sched.get("steps", []):
+            when = date.fromisoformat(step["date"])
+            days_left = (when - today).days
+            if days_left < -3:          # long past: assume done
+                continue
+            if rain is None and row.get("taluka"):
+                rain = sum((d.get("rain_mm") or 0) for d in weather.get_weather(_taluka(row["taluka"]))["forecast"][:2])
+            has_urea = any(p["product"] == "Urea" for p in step.get("products", []))
+            warning = (f"{rain:g} mm rain forecast in the next 2 days: delay the urea."
+                       if has_urea and rain and rain >= 10 and days_left <= 3 else None)
+            tasks.append({"crop": row["crop_name"], "taluka": row.get("taluka"), "date": step["date"],
+                          "days_left": days_left, "stage": step["stage"], "products": step.get("products", []),
+                          "warning": warning, "history_id": row["id"]})
+    tasks.sort(key=lambda t: t["date"])
+    return jsonify(tasks[:5]), 200
 
 
 # ─── Crop History ─────────────────────────────────────────────────────────────

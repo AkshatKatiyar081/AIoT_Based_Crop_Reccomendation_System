@@ -404,7 +404,7 @@ body { font-family: var(--font); background: var(--bg-dark); color: var(--text-p
 
 .check { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: var(--text-secondary); cursor: pointer; }
 
-.farm-setup { display: grid; grid-template-columns: 1fr 1fr auto; gap: 20px; align-items: end; }
+.farm-setup { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 20px; align-items: end; }
 .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
 .soil-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; }
 
@@ -472,6 +472,25 @@ body { font-family: var(--font); background: var(--bg-dark); color: var(--text-p
 .combo { display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; border: 1px solid var(--border-line); border-radius: var(--radius-card); background: var(--bg-panel); }
 .combo strong { font-size: 1.1rem; }
 .dose-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.timeline { list-style: none; margin: 10px 0 6px; padding: 0; position: relative; }
+.timeline::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; background: var(--border-line); }
+.tl-step { position: relative; display: grid; grid-template-columns: 150px 1fr; gap: 16px; padding: 0 0 18px 28px; }
+.tl-step::before { content: ""; position: absolute; left: 0; top: 4px; width: 16px; height: 16px; border-radius: 50%; background: var(--bg-card); border: 2px solid var(--border-hover); }
+.tl-due::before { background: #f59e0b; border-color: #f59e0b; }
+.tl-done::before { background: var(--success); border-color: var(--success); }
+.tl-done .tl-what { opacity: 0.6; }
+.tl-when { display: flex; flex-direction: column; gap: 2px; font-size: 0.9rem; }
+.tl-status { font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); }
+.tl-due .tl-status { color: #b45309; }
+.tl-stage { font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; }
+.tl-products { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
+.pill { font-size: 0.8rem; padding: 4px 10px; border-radius: 999px; background: var(--bg-input); border: 1px solid var(--border-line); }
+.tl-warn { color: #b45309; }
+.tasks-panel { margin-top: 16px; }
+.task { display: grid; grid-template-columns: 150px 1fr; gap: 16px; padding: 10px 0; border-top: 1px solid var(--border-line); font-size: 0.9rem; }
+.task:first-child { border-top: none; padding-top: 0; }
+.task-when { display: flex; flex-direction: column; }
+.task-soon .task-when strong { color: #b45309; }
 .notes { padding-left: 18px; font-size: 0.85rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 4px; }
 
 .later-list { display: flex; flex-direction: column; gap: 8px; }
@@ -528,4 +547,5 @@ body { font-family: var(--font); background: var(--bg-dark); color: var(--text-p
   .header-right { align-items: flex-start; }
   .panel { padding: 16px; }
   .soil-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .tl-step, .task { grid-template-columns: 1fr; gap: 4px; }
 }

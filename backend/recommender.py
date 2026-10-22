@@ -18,6 +18,7 @@ from joblib import load
 from config import CROP_MODEL_PATH
 import district
 import fertilizer
+import weather
 from knowledge import CROPS, month_names
 from soil_ratings import rate, encode_soil, ph_class, LEVEL_NAMES, PLAUSIBLE, UNITS
 
@@ -125,6 +126,14 @@ def _season_status(crop: str, month: int) -> dict:
     return {"status": status, "label": label, "sowing_months": month_names(sowing)}
 
 
+def _next_window_start(crop: str, after: date) -> date:
+    """First day of the crop's next sowing month after `after` (for 'later this year' crops)."""
+    sowing = CROPS[crop]["sowing_months"]
+    ahead = min(((m - after.month) % 12) or 12 for m in sowing)
+    month0 = after.month - 1 + ahead
+    return date(after.year + month0 // 12, month0 % 12 + 1, 1)
+
+
 def _water_check(crop: str, month: int, annual_rain_mm: float, irrigation: bool) -> dict:
     info = CROPS[crop]
     season = SEASON_OF_MONTH[month if month in info["sowing_months"] else
@@ -179,13 +188,18 @@ def _cost_text(rupees: float) -> str:
 
 # ─── Main entry point ─────────────────────────────────────────────────────────
 
-def recommend(soil_raw: dict, area_ha: float, irrigation: bool, on_date: date | None = None) -> dict:
+def recommend(soil_raw: dict, area_ha: float, irrigation: bool, on_date: date | None = None,
+              taluka: str | None = None) -> dict:
+    """`on_date` = the planned sowing/transplanting date (default today); seasons and
+    fertilizer schedules are worked out from it."""
     if _bundle is None:
         raise RuntimeError("Crop model not trained. Run ml/train_crop_model.py first.")
 
     soil = parse_soil_card(soil_raw)
-    month = (on_date or date.today()).month
+    sow_date = on_date or date.today()
+    month = sow_date.month
     annual_rain = district.pune_profile()["mean_rainfall_mm"]
+    forecast = weather.get_weather(taluka) if taluka else None
 
     x = _encode(soil)
     scores = [float(est[0, 1]) if est.shape[1] > 1 else 0.0
@@ -212,7 +226,10 @@ def recommend(soil_raw: dict, area_ha: float, irrigation: bool, on_date: date | 
             "cost_per_ha": f"{_cost_text(cost_lo)}–{_cost_text(cost_hi)}",
             "total_cost": f"{_cost_text(cost_lo * area_ha)}–{_cost_text(cost_hi * area_ha)}",
             "reason": _reason(crop, score, soil, season, water, irrigation),
-            "fertilizer": fertilizer.advise(crop, soil, area_ha),
+            "fertilizer": fertilizer.advise(
+                crop, soil, area_ha,
+                start=sow_date if season["status"] == "now" else _next_window_start(crop, sow_date),
+                weather=forecast, irrigation=irrigation),
         })
 
     # Crops that can't get enough water are ranked below the ones that can
@@ -228,6 +245,7 @@ def recommend(soil_raw: dict, area_ha: float, irrigation: bool, on_date: date | 
                         for f in SOIL_FIELDS if f != "pH"} | {"pH": ph_class(soil["pH"])},
         "confidence": confidence,
         "month": month,
+        "sowing_date": sow_date.isoformat(),
         "sow_now": now,
         "later": later,
         "note": None if results else "No crop in the model scored as suitable for this soil.",
