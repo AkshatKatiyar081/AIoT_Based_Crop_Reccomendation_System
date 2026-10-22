@@ -31,6 +31,20 @@ SSP_P2O5 = 0.16
 MOP_K2O = 0.60
 BAG_KG = {"Urea": 45, "DAP": 50, "SSP": 50, "MOP": 50}
 
+# Price per bag (Rs). Urea and DAP have government-fixed MRPs; MOP and SSP are
+# decontrolled, so the latest official average is used.
+BAG_PRICE = {
+    "Urea": (242, "Government MRP, Rs 242 per 45 kg bag (excl. neem coating and taxes)"),
+    "DAP":  (1350, "Government MRP, Rs 1,350 per 50 kg bag (Rabi 2025-26)"),
+    "MOP":  (1710, "Average MRP 2023-24, Rs 1,710 per 50 kg bag (Rajya Sabha answer)"),
+    "SSP":  (527, "Average MRP 2023-24, Rs 527 per 50 kg bag (Rajya Sabha answer)"),
+}
+
+
+def product_cost(product: str, kg: float) -> float:
+    price, _ = BAG_PRICE[product]
+    return kg / BAG_KG[product] * price
+
 LEGUMES = {"Grams", "Groundnut", "Soybean", "Indian Beans"}
 
 # Card combinations with no potash component (see knowledge/fertilizer_combinations.json)
@@ -74,7 +88,8 @@ def _product_rows(amounts: dict, area_ha: float) -> list[dict]:
             continue
         total = per_ha * area_ha
         rows.append({"product": name, "kg_per_ha": per_ha, "total_kg": round(total, 1),
-                     "bags": round(total / BAG_KG[name], 1), "bag_kg": BAG_KG[name]})
+                     "bags": round(total / BAG_KG[name], 1), "bag_kg": BAG_KG[name],
+                     "cost": round(product_cost(name, total))})
     return rows
 
 
@@ -123,7 +138,8 @@ def _product(name: str, per_ha: float, area_ha: float) -> dict | None:
         return None
     total = per_ha * area_ha
     return {"product": name, "kg_per_ha": per_ha, "total_kg": round(total, 1),
-            "bags": round(total / BAG_KG[name], 1), "bag_kg": BAG_KG[name]}
+            "bags": round(total / BAG_KG[name], 1), "bag_kg": BAG_KG[name],
+            "cost": round(product_cost(name, total))}
 
 
 def _rain_next_two_days(weather: dict | None) -> float:
@@ -224,6 +240,9 @@ def advise(crop: str, soil: dict, area_ha: float, start: date | None = None,
          "note": "SSP also supplies about 12% sulphur."},
     ]
     dose_options.sort(key=lambda o: not o["matches_card"])
+    for opt in dose_options:
+        opt["cost_total"] = sum(r["cost"] for r in opt["products"])
+        opt["cost_per_ha"] = round(sum(product_cost(r["product"], r["kg_per_ha"]) for r in opt["products"]))
 
     notes = []
     if need_k > 0 and combinations and all(c["code"] in NO_POTASH_CODES for c in combinations):
@@ -257,6 +276,7 @@ def advise(crop: str, soil: dict, area_ha: float, start: date | None = None,
         "standard_dose_kg_per_ha": rdf,
         "card_combinations": combinations,
         "dose_options": dose_options,
+        "prices": {k: {"per_bag": v[0], "bag_kg": BAG_KG[k], "source": v[1]} for k, v in BAG_PRICE.items()},
         "micronutrients": micro,
         "organic": organic_advice(soil),
         "notes": notes,

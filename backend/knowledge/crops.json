@@ -92,6 +92,12 @@
           }
         ],
         "sources": []
+      },
+      "market": {
+        "commodity": "Paddy(Dhan)(Common)",
+        "alternatives": [
+          "Rice"
+        ]
       }
     },
     "Grams": {
@@ -147,6 +153,10 @@
           "ICAR Rabi season agro-advisory for Maharashtra (vikaspedia.in)"
         ],
         "note": "Pulse crop: the whole dose goes in at sowing; treat seed with Rhizobium."
+      },
+      "market": {
+        "commodity": "Bengal Gram(Gram)(Whole)",
+        "alternatives": []
       }
     },
     "Sugarcane": {
@@ -230,6 +240,11 @@
           "MPKV Rahuri, Research Recommendations 2024: sugarcane N split at planting, 45, 90 and 120 days after planting; P and K at planting (mpkv.ac.in)"
         ],
         "note": "Split days are from MPKV; the share of nitrogen in each split is general practice."
+      },
+      "market": {
+        "commodity": null,
+        "fixed_price_per_quintal": 355,
+        "price_basis": "Government FRP 2025-26 at 10.25% sugar recovery (CCEA, 30 Apr 2025); mills buy cane at FRP, not in mandis"
       }
     },
     "Maize": {
@@ -301,6 +316,10 @@
           "AICRP Maize, Maharashtra: nitrogen in three equal splits (aicrpmaize.icar.gov.in/maharashtra)"
         ],
         "note": "Three equal nitrogen splits are from AICRP; the exact days are general practice."
+      },
+      "market": {
+        "commodity": "Maize",
+        "alternatives": []
       }
     },
     "Onion": {
@@ -377,6 +396,10 @@
           "National Horticulture Board, onion manuring: top dressing in two doses at 30 and 45 days after transplanting, before bulbing (nhb.gov.in/pdf/vegetable/onion/oni007.pdf)"
         ],
         "note": "Finish all nitrogen before bulbing starts."
+      },
+      "market": {
+        "commodity": "Onion",
+        "alternatives": []
       }
     },
     "Jowar": {
@@ -441,6 +464,10 @@
         "sources": [
           "MPKV Rahuri, Sorghum research recommendations (mpkv.ac.in/Uploads/Research/3. Sorghum_20200110053526.pdf)"
         ]
+      },
+      "market": {
+        "commodity": "Jowar(Sorghum)",
+        "alternatives": []
       }
     },
     "Bajra": {
@@ -506,6 +533,10 @@
         "sources": [
           "Pearl millet nitrogen scheduling trial, Aurangabad, Maharashtra (phytojournal.com 2019): half basal + half at tillering (25 DAS)"
         ]
+      },
+      "market": {
+        "commodity": "Bajra(Pearl Millet/Cumbu)",
+        "alternatives": []
       }
     },
     "Wheat": {
@@ -569,6 +600,10 @@
         "sources": [
           "ICAR Rabi season agro-advisory for Maharashtra (vikaspedia.in)"
         ]
+      },
+      "market": {
+        "commodity": "Wheat",
+        "alternatives": []
       }
     },
     "Groundnut": {
@@ -626,6 +661,12 @@
         ],
         "sources": [],
         "note": "Legume: whole dose at sowing; gypsum at flowering helps pod filling."
+      },
+      "market": {
+        "commodity": "Groundnut",
+        "alternatives": [
+          "Ground Nut Seed"
+        ]
       }
     },
     "Soybean": {
@@ -680,6 +721,10 @@
         ],
         "sources": [],
         "note": "Legume: whole dose at sowing; treat seed with Rhizobium."
+      },
+      "market": {
+        "commodity": "Soyabean",
+        "alternatives": []
       }
     },
     "Cucumber": {
@@ -741,6 +786,10 @@
           }
         ],
         "sources": []
+      },
+      "market": {
+        "commodity": "Cucumbar(Kheera)",
+        "alternatives": []
       }
     },
     "Ragi": {
@@ -802,6 +851,10 @@
         "sources": [
           "Dr. BSKKV Dapoli finger millet study: half N and full P at sowing/transplanting, remaining N at 30 DAS/DAT (epubs.icar.org.in, JISCAR)"
         ]
+      },
+      "market": {
+        "commodity": "Ragi(Finger Millet)",
+        "alternatives": []
       }
     },
     "Spinach": {
@@ -864,6 +917,10 @@
           }
         ],
         "sources": []
+      },
+      "market": {
+        "commodity": "Spinach",
+        "alternatives": []
       }
     },
     "Cabbage": {
@@ -935,6 +992,10 @@
           }
         ],
         "sources": []
+      },
+      "market": {
+        "commodity": "Cabbage",
+        "alternatives": []
       }
     },
     "Indian Beans": {
@@ -991,6 +1052,10 @@
         ],
         "sources": [],
         "note": "Legume: whole dose at sowing."
+      },
+      "market": {
+        "commodity": "Beans",
+        "alternatives": []
       }
     },
     "Methi": {
@@ -1048,6 +1113,10 @@
         ],
         "sources": [],
         "note": "Short leafy crop: whole dose at sowing."
+      },
+      "market": {
+        "commodity": "Methi(Leaves)",
+        "alternatives": []
       }
     },
     "Brinjal": {
@@ -1120,6 +1189,10 @@
           }
         ],
         "sources": []
+      },
+      "market": {
+        "commodity": "Brinjal",
+        "alternatives": []
       }
     }
   }

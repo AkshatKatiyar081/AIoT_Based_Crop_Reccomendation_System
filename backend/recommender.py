@@ -18,6 +18,7 @@ from joblib import load
 from config import CROP_MODEL_PATH
 import district
 import fertilizer
+import market
 import weather
 from knowledge import CROPS, month_names
 from soil_ratings import rate, encode_soil, ph_class, LEVEL_NAMES, PLAUSIBLE, UNITS
@@ -231,6 +232,9 @@ def recommend(soil_raw: dict, area_ha: float, irrigation: bool, on_date: date | 
                 start=sow_date if season["status"] == "now" else _next_window_start(crop, sow_date),
                 weather=forecast, irrigation=irrigation),
         })
+        fert = results[-1]["fertilizer"]
+        results[-1]["economics"] = market.economics(
+            crop, date.fromisoformat(fert["schedule"]["start_date"]), area_ha, fert["dose_options"][0]["cost_per_ha"])
 
     # Crops that can't get enough water are ranked below the ones that can
     def rank_key(r):

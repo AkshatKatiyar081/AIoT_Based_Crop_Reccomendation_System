@@ -39,6 +39,19 @@ def create_tables():
         );
     """)
 
+    # Daily mandi prices fetched from data.gov.in (the app's own price history)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS market_prices (
+            date        TEXT NOT NULL,
+            district    TEXT,
+            market      TEXT NOT NULL,
+            commodity   TEXT NOT NULL,
+            min_price   REAL,
+            max_price   REAL,
+            modal_price REAL,
+            PRIMARY KEY (date, market, commodity)
+        )""")
+
     # Schema Migrations
     for column in ("planting_cost_per_hectare", "total_cost", "taluka", "soil_snapshot", "sowing_date", "schedule"):
         try:
@@ -123,3 +136,18 @@ def delete_crop_history(entry_id: int, user_id: int) -> bool:
     conn.commit()
     conn.close()
     return cur.rowcount > 0
+
+
+# ─── Market price history ─────────────────────────────────────────────────────
+
+def save_market_prices(rows: list[tuple]):
+    """rows: (date, district, market, commodity, min, max, modal); repeats are ignored."""
+    if not rows:
+        return
+    conn = get_db()
+    conn.executemany(
+        """INSERT OR IGNORE INTO market_prices
+           (date, district, market, commodity, min_price, max_price, modal_price)
+           VALUES (?, ?, ?, ?, ?, ?, ?)""", rows)
+    conn.commit()
+    conn.close()

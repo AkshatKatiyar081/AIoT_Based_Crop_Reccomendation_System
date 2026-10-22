@@ -5,6 +5,7 @@ from flask import Blueprint, request, jsonify, session
 
 import database
 import district
+import market
 import mqtt_service
 import recommender
 import weather
@@ -60,6 +61,7 @@ def meta():
         fert_info = None
     return jsonify({
         "fertilizer_model": fert_info,
+        "market": market.live_status(),
         "talukas": [{"name": n, "in_training_data": t["in_training_data"]} for n, t in TALUKAS.items()],
         "soil_units": UNITS,
         "crops": sorted(CROPS),

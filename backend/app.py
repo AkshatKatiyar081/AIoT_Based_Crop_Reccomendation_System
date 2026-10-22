@@ -7,6 +7,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from flask import Flask, send_from_directory, redirect
 from config import SECRET_KEY, PORT
 import database
+import market
 import mqtt_service
 from auth import auth_bp
 from routes import api_bp
@@ -58,6 +59,9 @@ if __name__ == "__main__":
 
     # Start MQTT link (falls back to the built-in field simulator when no sensor publishes)
     mqtt_service.start()
+
+    # Fetch today's mandi prices in the background
+    market.warm_up()
 
     # Create and run app
     app = create_app()

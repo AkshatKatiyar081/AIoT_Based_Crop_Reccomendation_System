@@ -42,3 +42,8 @@ FERTILIZER_MODEL_PATH = BASE_DIR / "models" / "pune_fertilizer_model.joblib"
 FERTILIZER_METRICS_PATH = BASE_DIR / "models" / "pune_fertilizer_metrics.json"
 PROCESSED_SAMPLES_PATH = BASE_DIR / "data" / "processed" / "pune_soil_samples.csv"
 GIPE_DIR = BASE_DIR / "data" / "gipe_maharashtra"
+
+# ─── data.gov.in (Agmarknet mandi prices, crop statistics) ─
+DATA_GOV_IN_API_KEY = os.getenv("DATA_GOV_IN_API_KEY", "")
+MANDI_HISTORY_PATH = BASE_DIR / "data" / "processed" / "pune_mandi_prices.csv"
+PUNE_YIELDS_PATH = BASE_DIR / "data" / "processed" / "pune_crop_yields.csv"

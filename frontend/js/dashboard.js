@@ -307,9 +307,10 @@ function cropCard(crop, idx) {
       <div class="result-details-grid">
         <div class="result-detail-item"><div class="detail-label">Duration</div><div class="detail-value">${esc(crop.harvest_duration)}</div></div>
         <div class="result-detail-item"><div class="detail-label">Sowing months</div><div class="detail-value">${esc(crop.season.sowing_months)}</div></div>
-        <div class="result-detail-item"><div class="detail-label">Cost per hectare</div><div class="detail-value">${esc(crop.cost_per_ha)}</div></div>
-        <div class="result-detail-item"><div class="detail-label">Total for your area</div><div class="detail-value">${esc(crop.total_cost)}</div></div>
+        <div class="result-detail-item"><div class="detail-label">Cost of cultivation per ha</div><div class="detail-value">${esc(crop.cost_per_ha)}</div></div>
+        <div class="result-detail-item"><div class="detail-label">Fertilizer for your soil</div><div class="detail-value">${rupees(crop.fertilizer.dose_options[0].cost_total)} <span class="muted small">(${rupees(crop.fertilizer.dose_options[0].cost_per_ha)}/ha)</span></div></div>
       </div>
+      ${economicsBlock(crop.economics)}
 
       <details class="fert">
         <summary>Fertilizer plan</summary>
@@ -340,9 +341,10 @@ function fertilizerPlan(f) {
     <div class="fert-block">
       <div class="detail-label">${esc(opt.label)} ${opt.matches_card ? `<span class="tag ok">Matches card combination</span>` : ""}</div>
       <table class="mini-table">
-        <thead><tr><th>Product</th><th>kg/ha</th><th>Total</th><th>Bags</th></tr></thead>
+        <thead><tr><th>Product</th><th>kg/ha</th><th>Total</th><th>Bags</th><th>Cost</th></tr></thead>
         <tbody>
-          ${opt.products.map(p => `<tr><td>${esc(p.product)}</td><td>${p.kg_per_ha}</td><td>${p.total_kg} kg</td><td>${p.bags} × ${p.bag_kg} kg</td></tr>`).join("")}
+          ${opt.products.map(p => `<tr><td>${esc(p.product)}</td><td>${p.kg_per_ha}</td><td>${p.total_kg} kg</td><td>${p.bags} × ${p.bag_kg} kg</td><td>${rupees(p.cost)}</td></tr>`).join("")}
+          <tr><td colspan="4"><strong>Total</strong></td><td><strong>${rupees(opt.cost_total)}</strong></td></tr>
         </tbody>
       </table>
       ${opt.note ? `<p class="muted small">${esc(opt.note)}</p>` : ""}
@@ -371,6 +373,52 @@ function fertilizerPlan(f) {
     ${f.notes.length ? `<ul class="notes">${f.notes.map(n => `<li>${esc(n)}</li>`).join("")}</ul>` : ""}`;
 }
 
+function rupees(v) {
+  if (v === null || v === undefined) return "—";
+  const sign = v < 0 ? "−" : "";
+  return sign + "₹" + Math.abs(Math.round(v)).toLocaleString("en-IN");
+}
+
+function economicsBlock(e) {
+  if (!e) return "";
+  const live = e.live
+    ? `${rupees(e.live.price)}/quintal <span class="muted small">${e.live.level === "fixed" ? esc(e.live.basis)
+        : `${esc(e.live.level)} · ${esc(e.live.markets.slice(0, 3).join(", "))}${e.live.date ? " · " + esc(e.live.date) : ""}`}</span>`
+    : `<span class="muted">No mandi quote today</span>`;
+  const exp = e.expected_price
+    ? `${rupees(e.expected_price.median)}/quintal <span class="muted small">(${rupees(e.expected_price.low)}–${rupees(e.expected_price.high)} across years · ${esc(e.expected_price.years || "fixed")})</span>`
+    : `<span class="muted">Not enough price history</span>`;
+  const yld = e.yield ? `${e.yield.t_per_ha} t/ha <span class="muted small">(${esc(e.yield.basis)})</span>` : `<span class="muted">No district yield data yet</span>`;
+
+  let profit = `<p class="muted small">Profit estimate needs ${esc(e.missing.join(" and "))}.</p>`;
+  if (e.profit_total) {
+    const p = e.profit_total, lo = Math.min(p.low, 0), hi = Math.max(p.high, 0), span = hi - lo || 1;
+    const pos = v => ((v - lo) / span * 100).toFixed(1);
+    profit = `
+      <div class="profit">
+        <div class="profit-head"><span class="detail-label">Expected profit for your area</span>
+          <strong class="${p.typical >= 0 ? "pos" : "neg"}">${rupees(p.typical)}</strong></div>
+        <div class="range-bar">
+          <div class="range-fill" style="left:${pos(p.low)}%;width:${(pos(p.high) - pos(p.low)).toFixed(1)}%"></div>
+          ${lo < 0 ? `<div class="range-zero" style="left:${pos(0)}%"></div>` : ""}
+          <div class="range-mark" style="left:${pos(p.typical)}%"></div>
+        </div>
+        <div class="range-labels"><span>Bad year ${rupees(p.low)}</span><span>Good year ${rupees(p.high)}</span></div>
+        <p class="muted small">Yield × harvest-month price − cost of cultivation. Typical income ${rupees(e.income_per_ha_typical)}/ha.
+          ${e.yield_note ? esc(e.yield_note) : ""}</p>
+      </div>`;
+  }
+  return `
+    <div class="econ">
+      <div class="econ-grid">
+        <div><div class="detail-label">Mandi price today</div><div class="small">${live}</div></div>
+        <div><div class="detail-label">Expected at harvest (${esc(e.harvest_month)})</div><div class="small">${exp}</div></div>
+        <div><div class="detail-label">Yield</div><div class="small">${yld}</div></div>
+      </div>
+      ${profit}
+    </div>`;
+}
+
 const STEP_STATUS = { done: "Done", due: "Due now", upcoming: "Upcoming" };
 const REF_WORD = { sowing: "sowing", transplanting: "transplanting", planting: "planting" };
 
@@ -390,7 +438,7 @@ function scheduleTimeline(sch) {
             </div>
             <div class="tl-what">
               <div class="tl-stage">${esc(st.stage)}</div>
-              <div class="tl-products">${st.products.map(p => `<span class="pill">${esc(p.product)} <strong>${p.kg_per_ha} kg/ha</strong> · ${p.total_kg} kg · ${p.bags} bags</span>`).join("")}</div>
+              <div class="tl-products">${st.products.map(p => `<span class="pill">${esc(p.product)} <strong>${p.kg_per_ha} kg/ha</strong> · ${p.total_kg} kg · ${p.bags} bags · ${rupees(p.cost)}</span>`).join("")}</div>
               ${st.tips.map(t => `<div class="small ${t.includes("rain") ? "tl-warn" : "muted"}">${t.includes("rain") ? "⚠ " : ""}${esc(t)}</div>`).join("")}
             </div>
           </li>`).join("")}
